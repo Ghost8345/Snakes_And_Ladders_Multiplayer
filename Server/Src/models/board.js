@@ -1,4 +1,4 @@
-import {connection} from "../db/dbConnections.js";
+import connection from "../db/dbConnections.js";
 import {DataTypes } from "sequelize";
 
 export const boardSchema = connection.define("board", {

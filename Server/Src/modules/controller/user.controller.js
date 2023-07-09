@@ -33,25 +33,26 @@ export const logIn = async (req, res) => {
   if(!userName || !password) {
     res.status(400).send("Username and/or password missing")
   }
+  console.log(req.body);
 
-  const encryptedPassword =await bcrypt.hash(password, 10);
-  password = encryptedPassword
-
-
-  const user = await userSchema.findAll({
+  const user = await userSchema.findOne({
       where: {
-          userName: userName,
-          password: password,
-      },
+          userName: userName
+      }
   });
+  if(!user || !await(bcrypt.compare(password,user.password))){
+    return res.status(400).send("invalid credentials")
+  }
+  console.log(user)
 
-    user.length && res.send({ message: "founded", user });
-    !user.length && res.send({ message: "notFounded" });
+
 
     const payload = {
       userName: userName,
-      password: encryptedPassword
+      password: user.password
     }
     const token = jwt.sign(payload,"fdsoiuhrjiuhiuegrS")
+
+    return res.status(200).json({token: token, payload:payload})
 };
 

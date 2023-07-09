@@ -3,13 +3,14 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const createUser = async (req, res) => {
-    const { userName, password } = req.body;
+    let { userName, password } = req.body;
     if (!userName || !password) {
         res.status(400).send("Username and/or password missing");
     }
 
     const encryptedPassword = await bcrypt.hash(password, 10);
     console.log(encryptedPassword);
+    password = encryptedPassword
     try {
         let users = await userSchema.create({ userName, password });
         const payload = {

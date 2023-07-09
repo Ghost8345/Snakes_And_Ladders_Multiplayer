@@ -10,20 +10,23 @@ export const gameSchema = connection.define("game", {
         autoIncrement: true
     }
     ,
-    boardId:{
-        type:DataTypes.INTEGER,
+    boardId: {
+        type: DataTypes.INTEGER,
     },
-    createdBy:{
-        type:DataTypes.INTEGER
+    createdBy: {
+        type: DataTypes.INTEGER
     },
-    status:{
-        type:DataTypes.STRING(255)
+    status: {
+        type: DataTypes.STRING(255)
     },
-    lastTurn:{
-        type:DataTypes.INTEGER
+    lastTurn: {
+        type: DataTypes.INTEGER
     }
 
 });
+
+
+
 gameSchema.belongsTo(userSchema, {
     foreignKey: "createdBy",
     targetKey: "id",

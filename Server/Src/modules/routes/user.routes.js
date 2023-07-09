@@ -1,15 +1,16 @@
 import express from 'express';
-export const router = express.Router();
+export const userRouter = express.Router();
 import { createUser, logIn } from '../controller/user.controller.js';
-router.use(express.json());
+userRouter.use(express.json());
 
-router.get("/", async (req, res) => {
+userRouter.get("/", async (req, res) => {
 
     res.send("hello from the other side ");
 })
 
 
 
-router.post("/createUser", createUser);
+userRouter.post("/createUser", createUser);
 
-router.post("/login", logIn);
+userRouter.post("/login", logIn);
+

@@ -8,10 +8,9 @@ export const gameSchema = connection.define("game", {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
-    }
-    ,
+    },
     boardId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER
     },
     createdBy: {
         type: DataTypes.INTEGER

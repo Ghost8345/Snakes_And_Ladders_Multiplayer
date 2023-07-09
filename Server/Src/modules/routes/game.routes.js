@@ -5,7 +5,7 @@ gameRouter.use(express.json());
 
 gameRouter.get("/", async (req, res) => {
 
-    res.send("hello from the other side ");
+    res.send("hello from the other side Game ");
 })
 
 

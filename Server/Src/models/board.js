@@ -8,8 +8,8 @@ export const boardSchema = connection.define("board", {
         autoIncrement: true
     }
     ,
-    imagePath:{
-        type:DataTypes.STRING(255)
+    imagePath: {
+        type: DataTypes.STRING(255)
     }
 });
 connection.sync();

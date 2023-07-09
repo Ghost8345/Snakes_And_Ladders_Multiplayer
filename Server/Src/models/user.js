@@ -1,7 +1,7 @@
-import {DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import connection from "../db/dbConnections.js";
-
 export const userSchema = connection.define("user", {
+
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

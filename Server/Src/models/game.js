@@ -1,5 +1,6 @@
 import { userSchema } from "./user";
-import {connection} from "../db/dbconnection.js";
+import { boardSchema } from "./board";
+import {connection} from "../db/dbConnections.js";
 import {DataTypes } from "sequelize";
 
 export const gameSchema = connection.define("game", {
@@ -27,3 +28,9 @@ gameSchema.belongsTo(userSchema, {
     foreignKey: "createdBy",
     targetKey: "id",
   });
+  gameSchema.belongsTo(boardSchema, {
+    foreignKey: "boardId",
+    targetKey: "id",
+  });
+
+  connection.sync();

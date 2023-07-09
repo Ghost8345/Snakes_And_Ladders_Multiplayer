@@ -12,10 +12,7 @@
   "dependencies": {
     "express": "^4.18.2",
     "mysql2": "^3.5.0",
-<<<<<<< HEAD
     "nodemon": "^2.0.22",
-=======
->>>>>>> ea0c1978a46dbf2f963e3a5c6c22b55a341a2f64
     "sequelize": "^6.32.1"
   }
 }

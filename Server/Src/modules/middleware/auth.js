@@ -16,7 +16,7 @@ export const verifyToken = (req,res, next) => {
         const decodedPayload = jwt.verify(token,"fdsoiuhrjiuhiuegrS")
         req.user = decodedPayload
     } catch (error) {
-        res.status(401).send("Invalid token")
+        return res.status(401).send("Invalid token")
     }
     return next()
 }

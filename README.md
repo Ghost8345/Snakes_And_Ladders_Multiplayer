@@ -15,7 +15,7 @@ A Snakes and Ladders Board game with implementaion of JWT & HttpOnly Cookie.
 ## Contributors
 
 - [Meniem Hany](https://github.com/Ghost8345)
-- 
+- [Antoine Talaat](https://github.com/AntoineTalaat)
 - [Rowan Essam Abbas](https://github.com/Rowan-Essam61)
 - [Ehab Tarek](https://github.com/Irenaeus-XVI)
 - [Jomana Ehab](https://github.com/jomanaehabb)

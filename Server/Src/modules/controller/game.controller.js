@@ -1,6 +1,5 @@
 import { gameSchema } from "../../models/game.js";
 import { userGameSchema } from "../../models/usergame.js";
-let count = 0;
 
 export const createGame = async (req, res) => {
     const { boardId, createdBy, status, lastTurn, numberOfPlayers } = req.body;
@@ -8,7 +7,6 @@ export const createGame = async (req, res) => {
     res.json(games);
 };
 
-// Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Im1lbmEiLCJwYXNzd29yZCI6IiQyYSQxMCRETXFWOXdTc3Blay5XNHlQUFBlRW91dUJ1cVl0cWE5S09lVXdPbTd4MDJVSEdMLjhIZjFMLiIsImlhdCI6MTY4ODkwNjMyN30.zh_W9ogqPRawME7yUjlh8aVKF2aa-ElcF9mElPvZ5i8
 export const joinGame = async (req, res) => {
     let { userId, gameId, color } = req.body;
     let position = 0;
@@ -45,6 +43,25 @@ export const joinGame = async (req, res) => {
             await userGameSchema.create({ userId, gameId, position, status, color });
 
         }
-        console.log(playersJoined.length);
     }
+};
+
+export const move = async (req, res) => {
+    const { userId, gameId } = req.body;
+
+    const playersList = await userGameSchema.findAll({
+        where: {
+            gameId: gameId,
+        },
+    });
+
+    const playerIds = []
+
+    playersList.map( (player) => {
+        playerIds.push(player.userId)
+    })
+
+    
+
+
 };

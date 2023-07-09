@@ -6,6 +6,7 @@ export const createUser = async (req, res) => {
     try {
         let users = await userSchema.create({ userName, password });
         res.json({ message: "user created", users });
+
     } catch (error) {
         console.log(error, "----------");
         res.json({ message: "user already exist " });

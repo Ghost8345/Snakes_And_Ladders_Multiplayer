@@ -1,9 +1,9 @@
-# Snakes_And_Ladders_Multiplayer
+# Snakes And Ladders Multiplayer
 
 ## About the Game
 
 Enozom 2023 7-day BootCamp Project.
-A Snakes and Ladders Board game with login with implementaion of JWT.
+A Snakes and Ladders Board game with implementaion of JWT & HttpOnly Cookie.
 
 ## Codebase Used
 
@@ -11,3 +11,13 @@ A Snakes and Ladders Board game with login with implementaion of JWT.
 - Node.js
 - MySQL
 - socket.io
+
+## Contributors
+
+- [Meniem Hany](https://github.com/Ghost8345)
+- 
+- [Rowan Essam Abbas](https://github.com/Rowan-Essam61)
+- [Ehab Tarek](https://github.com/Irenaeus-XVI)
+- [Jomana Ehab](https://github.com/jomanaehabb)
+
+## TestCase

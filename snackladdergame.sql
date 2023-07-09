@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2023 at 01:39 PM
+-- Generation Time: Jul 08, 2023 at 08:01 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -87,6 +87,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `userName`, `password`) VALUES
+(4, '', '1235');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -109,7 +116,8 @@ ALTER TABLE `elements`
 ALTER TABLE `games`
   ADD PRIMARY KEY (`id`),
   ADD KEY `boardId` (`boardId`),
-  ADD KEY `lastTurn` (`lastTurn`);
+  ADD KEY `lastTurn` (`lastTurn`),
+  ADD KEY `createdBy` (`createdBy`);
 
 --
 -- Indexes for table `usergame`
@@ -123,7 +131,8 @@ ALTER TABLE `usergame`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `userName` (`userName`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -157,7 +166,7 @@ ALTER TABLE `usergame`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -174,7 +183,8 @@ ALTER TABLE `elements`
 --
 ALTER TABLE `games`
   ADD CONSTRAINT `games_ibfk_1` FOREIGN KEY (`boardId`) REFERENCES `board` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `games_ibfk_2` FOREIGN KEY (`lastTurn`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `games_ibfk_2` FOREIGN KEY (`lastTurn`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `games_ibfk_3` FOREIGN KEY (`createdBy`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `usergame`

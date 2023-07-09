@@ -1,5 +1,5 @@
-import connection from "../db/dbconnection.js";
-import {DataTypes } from "sequelize";
+import connection from "../db/dbConnections.js";
+import { DataTypes } from "sequelize";
 export const userSchema = connection.define("user", {
     id: {
         type: DataTypes.INTEGER,
@@ -19,3 +19,6 @@ export const userSchema = connection.define("user", {
     createdAt: false,
     updatedAt: false
 });
+
+
+connection.sync();

@@ -1,6 +1,7 @@
-import { DataTypes } from "sequelize";
-import connection from "../db/dbConnections.js";
+import { userSchema } from "./user.js";
 import { boardSchema } from "./board.js";
+import connection from "../db/dbConnections.js";
+import {DataTypes } from "sequelize";
 
 export const gameSchema = connection.define("game", {
     id: {
@@ -20,21 +21,26 @@ export const gameSchema = connection.define("game", {
     lastTurn: {
         type: DataTypes.INTEGER
     },
-    NoOfPlayers: {
+    numberOfPlayers:{
         type: DataTypes.INTEGER
     }
-});
 
-gameSchema.belongsTo(boardSchema, {
-    foreignKey: "boardId",
-    targetKey: "id"
 });
+connection.sync();
 
-import { userSchema } from "./user.js";
+
 
 gameSchema.belongsTo(userSchema, {
     foreignKey: "createdBy",
-    targetKey: "id"
-});
+    targetKey: "id",
+  });
+  gameSchema.belongsTo(boardSchema, {
+    foreignKey: "boardId",
+    targetKey: "id",
+  });
+  gameSchema.belongsTo(userSchema, {
+    foreignKey: "lastTurn",
+    targetKey: "id",
+  });
 
-connection.sync();
+  connection.sync();

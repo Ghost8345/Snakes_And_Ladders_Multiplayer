@@ -20,4 +20,4 @@ A Snakes and Ladders Board game with implementaion of JWT & HttpOnly Cookie.
 - [Ehab Tarek](https://github.com/Irenaeus-XVI)
 - [Jomana Ehab](https://github.com/jomanaehabb)
 
-## TestCase
+## Test game

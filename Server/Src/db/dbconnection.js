@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes } from "sequelize";
-const connection = new Sequelize("snackladdergame", "root", "", {
+const connection = new Sequelize("snackladdergame", "root", "8520789", {
     host: "localhost",
     dialect: "mysql"
 })
@@ -14,8 +14,6 @@ try {
 
 
 
-<<<<<<< HEAD
-=======
 
 export const userSchema = connection.define("user", {
     id: {
@@ -37,6 +35,6 @@ export const userSchema = connection.define("user", {
     updatedAt: false
 });
 
->>>>>>> ea0c1978a46dbf2f963e3a5c6c22b55a341a2f64
+
 connection.sync();
 export default connection; 

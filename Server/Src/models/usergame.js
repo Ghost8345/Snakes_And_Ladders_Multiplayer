@@ -2,8 +2,6 @@ import connection from "../db/dbConnections.js";
 import { DataTypes } from "sequelize";
 import { userSchema } from "../models/user.js";
 import { gameSchema } from "../models/game.js";
-import { userSchema } from "../models/user.js";
-import { gameSchema } from "../models/game.js";
 
 export const userGameSchema = connection.define("usergame", {
   id: {

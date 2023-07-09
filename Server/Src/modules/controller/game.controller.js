@@ -1,6 +1,6 @@
 import { gameSchema } from "../../models/game.js";
 import { userGameSchema } from "../../models/usergame.js";
-let count = 0;
+
 
 export const createGame = async (req, res) => {
   // TODO
@@ -44,6 +44,12 @@ export const joinGame = async (req, res) => {
           },
         }
       );
+      let players= []
+      playersJoined.map((player)=>{
+        players.push(player.userId)
+      })
+      players.push(parseInt(userId));
+      res.send(players)
       console.log("Last Player");
     } else {
       await userGameSchema.create({ userId, gameId, position, status, color });

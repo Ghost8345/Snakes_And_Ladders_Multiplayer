@@ -79,7 +79,22 @@ export const move = async (req, res) => {
         },
     });
 
+    const lastTurn = game.lastTurn;
+    const indexOfLastPlayer = playerIds.indexOf(lastTurn)
+    const indexOfCurrentPlayer = ( indexOfLastPlayer + 1 ) % game.numberOfPlayers
 
+
+    if (!lastTurn){
+        if (playerIds[0] != userId){
+            return res.status(400).send("Wrong Turn")
+        }
+    }
+    else {
+        
+        if (playerIds[indexOfCurrentPlayer] != userId){
+            return res.status(400).send("Wrong Turn")
+        }
+    }
 
 
 

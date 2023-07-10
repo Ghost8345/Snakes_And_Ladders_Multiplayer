@@ -1,5 +1,6 @@
 import { gameSchema } from "../../models/game.js";
 import { userGameSchema } from "../../models/usergame.js";
+import { elementSchema } from "../../models/element.js";
 
 export const createGame = async (req, res) => {
     
@@ -34,6 +35,8 @@ export const joinGame = async (req, res) => {
       gameId: gameId,
     },
   });
+
+  const board = await boa
 
   console.log("Max Number of Players for this Game: ", gameFound.numberOfPlayers);
   if (playersJoined.length == gameFound.numberOfPlayers) {
@@ -76,18 +79,30 @@ export const move = async (req, res) => {
       return res.status(400).send("Game Not Found");
     }
 
+    if (game.status == "Finished"){
+      return res.status(400).send("Game is Finished");
+    }
+
     const playersList = await userGameSchema.findAll({
         where: {
             gameId: gameId,
         },
     });
 
+    const elements = await elementSchema.findAll({
+      where: {
+        boardId: game.boardId
+      }
+    })
+
+    console.log(elements)
+
 
     const playerIds = playersList.map( (player) => {
       return player.userId
     })
 
-    console.log("Player Id List: ", playerIds)
+    console.log("Player Id List: ", playersList)
 
 
 
@@ -113,7 +128,64 @@ export const move = async (req, res) => {
         }
     }
 
+    const dice = rollDice()
+    console.log(dice)
 
+    const playerPostion = playersList.find( player => player.userId === userId).position
+    console.log(playerPostion)
 
+    let newPosition = playerPostion + dice;
+    const elementAtNewPosition = elements.find(element => element.goFrom === (newPosition))
+    
+    if (elementAtNewPosition){
+      newPosition = elementAtNewPosition.goTo
+    }
+    console.log(newPosition)
 
+    if (newPosition > 20){
+      newPosition = playerPostion
+    }
+
+    if (newPosition === 20){
+      await gameSchema.update(
+        {status: "Finished"}, 
+        {
+          where: {
+            id: gameId,
+          },
+        }
+      )
+    }
+
+    
+
+    const userGameId = playersList.find(player => player.userId === userId).id
+    console.log(userGameId)
+
+    await userGameSchema.update(
+      { status: "active", position: newPosition },
+      {
+        where: {
+          id: userGameId,
+        },
+      }
+    );
+
+    await gameSchema.update(
+      {lastTurn: userId}, 
+      {
+        where: {
+          id: gameId,
+        },
+      }
+    )
+
+    const movement = playerPostion !== newPosition ? "Move Successful" : "Move Failed (overflow)"
+
+    return res.status(200).json( {
+      status: movement,
+      position: newPosition
+    })
 };
+
+const rollDice = () => {return Math.floor(Math.random() * (6)) + 1}

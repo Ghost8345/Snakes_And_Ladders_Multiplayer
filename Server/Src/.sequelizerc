@@ -1,0 +1,13 @@
+
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+const currentDir = dirname(fileURLToPath(import.meta.url));
+
+module.exports={
+    'config': resolve( 'config', 'config.js'),
+    'models-path': resolve( 'models'),
+    'migrations-path': resolve( 'migrations'),
+    'seeders-path': resolve('seeders'),
+};
+console.log(currentDir);

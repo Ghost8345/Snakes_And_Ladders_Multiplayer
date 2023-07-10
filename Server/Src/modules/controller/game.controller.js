@@ -1,9 +1,32 @@
 import { gameSchema } from "../../models/game.js";
 import { userGameSchema } from "../../models/usergame.js";
+import { io } from "../../index.js"
+let count = 0;
 import { elementSchema } from "../../models/element.js";
 import { boardSchema } from "../../models/board.js";
 
+
+/*
+SOCKET 
+1/ connect on opening webpage
+2/ ask to create or join game
+    when creating games : - create new room id,
+                          - join player in socket room with that id
+                          - store it in db in game table,
+                          - store the user socket id in game user table
+    when joining games  : - get the room id from db
+                          - join player in socket room with that id
+                          - store the user socket id in game user table
+3/ on playing: in player turn he sends a request to the back for the move
+   when the move is over, we emit to that room a json {type: 'update'|'disconnect'|'notifyleave'|'gameover' , response: ''}
+
+
+*/
+
+
+
 export const createGame = async (req, res) => {
+
 
   const { boardId, createdBy, numberOfPlayers, userId, color } = req.body;
   let status = "pending"
@@ -25,7 +48,12 @@ export const createGame = async (req, res) => {
 
   await userGameSchema.create({ userId, gameId, position, status, color });
 
-
+  // TODO : assign a unique string as game id and add it to the database. this string will be the room id
+  const roomId = "room-"+boardId+"-"+createdBy
+    io.on('connection', (socket) => {
+        socket.join(roomId);
+        console.log("connected inside of create game")
+      });
   res.status(200).json({ games, board });
 };
 

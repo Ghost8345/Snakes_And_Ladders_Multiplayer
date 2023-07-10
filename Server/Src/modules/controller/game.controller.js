@@ -26,11 +26,7 @@ SOCKET
 
 
 export const createGame = async (req, res) => {
-    const { boardId, createdBy, lastTurn, numberOfPlayers } = req.body;
-    const games = await gameSchema.create({ boardId, createdBy, lastTurn, numberOfPlayers });
 
-    
-    res.json(games);
 
   const { boardId, createdBy, numberOfPlayers, userId, color } = req.body;
   let status = "pending"

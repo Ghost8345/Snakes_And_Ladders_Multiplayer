@@ -4,14 +4,14 @@ import { gameRouter } from './modules/routes/game.routes.js'
 import { verifyToken } from './modules/middleware/auth.js';
 import { Server } from 'socket.io'
 import http from 'http';
-
-const app = express()
-const port = 4000
-const server = http.createServer(app);
-export const io = new Server(server);
 import sequelizeCli from './sequelize-cli.js';
 
-const app = express();
+
+const app = express()
+const server = http.createServer(app);
+export const io = new Server(server);
+
+
 const port = process.env.PORT || 4000;
 
 // Middleware

@@ -1,15 +1,20 @@
 import express from 'express';
-const app = express()
-const port = 4000
-import { userRouter } from './modules/routes/user.routes.js'
-import { gameRouter } from './modules/routes/game.routes.js'
+import { gameRouter } from './modules/routes/game.routes.js';
+import { userRouter } from './modules/routes/user.routes.js';
 import { verifyToken } from './modules/middleware/auth.js';
+import sequelizeCli from './sequelize-cli.js';
 
-app.use(express.json())
+const app = express();
+const port = process.env.PORT || 4000;
 
+// Middleware
+app.use(express.json());
 
-app.use('/user',userRouter);
-app.use('/game',verifyToken,gameRouter);
+// Routes
+app.use('/game', verifyToken, gameRouter);
+app.use('/user', userRouter);
 
-app.listen(port, () => console.log(`Server is listening on port ${port}!`))
-
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});

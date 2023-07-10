@@ -6,10 +6,10 @@ userRouter.use(express.json());
 
 userRouter.get("/", async (req, res) => {
     try {
-        const games = await userSchema.findAll({});
-        res.json({ games, message: "5" });
+        const users = await userSchema.findAll({});
+        res.status(200).json({users});
     } catch (error) {
-        console.error('Error retrieving games:', error);
+        console.error('Error retrieving users:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });

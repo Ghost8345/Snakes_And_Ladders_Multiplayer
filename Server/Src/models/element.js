@@ -1,7 +1,8 @@
 
-import { boardSchema } from "./board";
+import { boardSchema } from "../models/board.js";
 import connection from "../db/dbConnections.js";
 import { DataTypes } from "sequelize";
+import { gameSchema } from "../models/game.js";
 
 export const elementSchema = connection.define("element", {
   id: {

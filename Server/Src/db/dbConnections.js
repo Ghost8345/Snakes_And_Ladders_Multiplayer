@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes } from "sequelize";
-const connection = new Sequelize("snackladdergame", "root", "", {
+const connection = new Sequelize("snackladdergame", "root", "root", {
     host: "localhost",
     dialect: "mysql"
 })

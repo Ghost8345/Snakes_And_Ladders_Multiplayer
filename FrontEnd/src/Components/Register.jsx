@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 
+
 export default function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -17,6 +18,12 @@ export default function Register() {
     const handleLoginClick = () => {
     navigate("/login");
     };
+
+    const handleRegisterClick = () => {
+      console.log('Username:', username);
+      console.log('Password:', password);
+      navigate("/Lobby");
+      };
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,6 +34,7 @@ export default function Register() {
       
       return (
         <div>
+          <h2>Snake and Ladders Muliplayer Game</h2>
           <h2>Register</h2>
           <form onSubmit={handleSubmit}>
             <div>
@@ -47,8 +55,9 @@ export default function Register() {
                 onChange={handlePasswordChange}
               />
             </div>
-            <button type="submit">Register</button>
+            <button type="submit" onClick={handleRegisterClick} >Register</button>
             <button type = "button" onClick={handleLoginClick}>Login</button>
+
           </form>
         </div>
       );

@@ -15,9 +15,15 @@ export default function Login() {
       };
 
       const handleRegisterClick = () => {
-        navigate("/register");
+        navigate("/Register");
       };
-    
+
+      const handleLoginClick = () => {
+        console.log('Username:', username);
+        console.log('Password:', password);
+        navigate("/Lobby");
+      };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Logic for handling form submission (e.g., API call, validation, etc.)
@@ -27,6 +33,7 @@ export default function Login() {
       
       return (
         <div>
+          <h2>Snake and Ladders Muliplayer Game</h2>
           <h2>Login</h2>
           <form onSubmit={handleSubmit}>
             <div>
@@ -47,9 +54,10 @@ export default function Login() {
                 onChange={handlePasswordChange}
               />
             </div>
-            <button type="submit">Login</button>
+            <button type = "Login" onClick={handleLoginClick}>Login</button>
             <button type = "button"  onClick={handleRegisterClick}>Register</button>
           </form>
         </div>
+            
       );
 }

@@ -11,7 +11,7 @@ export const createGame = async (req, res) => {
     let position =0;
     let gameId=games.id;
     await userGameSchema.create({ userId, gameId, position, status, color });
-    res.json(games);
+    res.status(200).json(games);
 };
 
 export const joinGame = async (req, res) => {
@@ -24,38 +24,57 @@ export const joinGame = async (req, res) => {
       id: gameId,
     },
   });
+
   if (!gameFound) {
-    res.status(400).send({ message: "Not Found" });
-  } else {
-    const playersJoined = await userGameSchema.findAll({
-      where: {
-        gameId: gameId,
-      },
-    });
-    console.log(gameFound.numberOfPlayers);
-    if (playersJoined.length == gameFound.numberOfPlayers) {
-      console.log("Cannot joiin Full Game");
-    } else if (playersJoined.length == gameFound.numberOfPlayers - 1) {
-      await userGameSchema.create({ userId, gameId, position, status, color });
-      await gameSchema.update(
-        { status: "Started" },
-        {
-          where: {
-            id: gameId,
-          },
-        }
-      );
-     
-      return res.status(200).json(players)
-    } else {
-      await userGameSchema.create({ userId, gameId, position, status, color });
-      return res.status(200)
-    }
+    return res.status(400).send("Game Not Found");
   }
+
+  const playersJoined = await userGameSchema.findAll({
+    where: {
+      gameId: gameId,
+    },
+  });
+
+  console.log("Max Number of Players for this Game: ", gameFound.numberOfPlayers);
+  if (playersJoined.length == gameFound.numberOfPlayers) {
+    return res.status(400).send("Game Not Found");
+  } else if (playersJoined.length == gameFound.numberOfPlayers - 1) {
+    await userGameSchema.create({ userId, gameId, position, status, color });
+    await gameSchema.update(
+      { status: "Started" },
+      {
+        where: {
+          id: gameId,
+        },
+      }
+    );
+    const players = playersJoined.map( (player) => {
+      return player.userId
+    })
+
+    players.push(userId)
+
+    console.log(players)
+    return res.status(200).json(players)
+  } else {
+    await userGameSchema.create({ userId, gameId, position, status, color });
+    return res.status(200).send("Succesfuly Joined")
+  }
+  
 };
 
 export const move = async (req, res) => {
     const { userId, gameId } = req.body;
+
+    const game = await gameSchema.findOne({
+      where: {
+        id: gameId,
+      },
+    });
+
+    if (!game) {
+      return res.status(400).send("Game Not Found");
+    }
 
     const playersList = await userGameSchema.findAll({
         where: {
@@ -63,21 +82,19 @@ export const move = async (req, res) => {
         },
     });
 
-    const playerIds = []
 
-    playersList.map( (player) => {
-        playerIds.push(player.userId)
+    const playerIds = playersList.map( (player) => {
+      return player.userId
     })
+
+    console.log("Player Id List: ", playerIds)
+
+
 
     if (!playerIds.includes(userId)){
         return res.status(400).send("Player Not in Players List")
     }
 
-    const game = await gameSchema.findOne({
-        where: {
-          id: gameId,
-        },
-    });
 
     const lastTurn = game.lastTurn;
     const indexOfLastPlayer = playerIds.indexOf(lastTurn)

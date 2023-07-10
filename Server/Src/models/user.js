@@ -12,7 +12,7 @@ export const userSchema = connection.define("user", {
         type: DataTypes.STRING(50)
     },
     password: {
-        type: DataTypes.STRING(50)
+        type: DataTypes.STRING(255)
 
     }
 }, {

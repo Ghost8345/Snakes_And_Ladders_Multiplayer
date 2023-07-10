@@ -7,7 +7,7 @@ export const gameSchema = connection.define("game", {
         autoIncrement: true
     },
     roomId: {
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
     },
     boardId: {
         type: DataTypes.INTEGER

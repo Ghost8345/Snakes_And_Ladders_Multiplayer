@@ -24,3 +24,6 @@ export const config = {
         logging: false,
     },
 };
+
+
+export const secret = "fdsoiuhrjiuhiuegrS"

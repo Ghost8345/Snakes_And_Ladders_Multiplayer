@@ -6,6 +6,19 @@ import { elementSchema } from "../../models/element.js";
 import { boardSchema } from "../../models/board.js";
 
 
+const colors =[  
+    '#FF0000', // Red
+    '#0000FF', // Blue
+    '#00FF00', // Green
+    '#FFFF00', // Yellow
+    '#FFA500', // Orange
+    '#800080', // Purple
+    '#FFC0CB', // Pink
+    '#808080', // Gray
+    '#008080', // Teal
+    '#A52A2A'  // Brown
+ ]
+
 /*
 SOCKET 
 1/ connect on opening webpage
@@ -28,7 +41,7 @@ SOCKET
 export const createGame = async (req, res) => {
 
 
-  const { boardId, createdBy, numberOfPlayers, userId, color } = req.body;
+  const { boardId, numberOfPlayers, userId} = req.body;
   let status = "pending"
   let lastTurn = null
   const board = await boardSchema.findOne({
@@ -41,11 +54,14 @@ export const createGame = async (req, res) => {
     return res.status(400).json({ Message: "Board is not found " })
   }
 
+  const createdBy = userId
+
   const games = await gameSchema.create({ boardId, createdBy, status, lastTurn, numberOfPlayers });
   status = "active"
   let position = 0;
   let gameId = games.id;
-
+  const color = colors[0]
+  
   await userGameSchema.create({ userId, gameId, position, status, color });
 
   // TODO : assign a unique string as game id and add it to the database. this string will be the room id
@@ -58,7 +74,7 @@ export const createGame = async (req, res) => {
 };
 
 export const joinGame = async (req, res) => {
-  let { userId, gameId, color } = req.body;
+  let { userId, gameId } = req.body;
   let position = 0;
   let status = "active";
 
@@ -82,6 +98,8 @@ export const joinGame = async (req, res) => {
   if (playersJoined.length == gameFound.numberOfPlayers) {
     return res.status(400).send("Game has reached the number of players required");
   } else if (playersJoined.length == gameFound.numberOfPlayers - 1) {
+    const color = colors[playersJoined.length]
+
     await userGameSchema.create({ userId, gameId, position, status, color });
     await gameSchema.update(
       { status: "Started" },
@@ -100,6 +118,8 @@ export const joinGame = async (req, res) => {
     console.log(players)
     return res.status(200).json(players)
   } else {
+    const color = colors[playersJoined.length]
+
     await userGameSchema.create({ userId, gameId, position, status, color });
     return res.status(200).send("Succesfuly Joined")
   }
@@ -174,19 +194,24 @@ export const move = async (req, res) => {
   const playerPostion = playersList.find(player => player.userId === userId).position
   console.log(playerPostion)
 
+  let positions = []
+  positions.push(playerPostion)
   let newPosition = playerPostion + dice;
+  positions.push(newPosition)
   const elementAtNewPosition = elements.find(element => element.goFrom === (newPosition))
 
   if (elementAtNewPosition) {
     newPosition = elementAtNewPosition.goTo
+    positions.push(newPosition)
   }
   console.log(newPosition)
 
-  if (newPosition > 20) {
+  if (newPosition > 100) {
     newPosition = playerPostion
+    positions = [newPosition]
   }
 
-  if (newPosition === 20) {
+  if (newPosition === 100) {
     await gameSchema.update(
       { status: "Finished" },
       {
@@ -224,7 +249,8 @@ export const move = async (req, res) => {
 
   return res.status(200).json({
     status: movement,
-    position: newPosition
+    positions: positions,
+    dice: dice
   })
 };
 

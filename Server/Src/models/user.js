@@ -14,6 +14,7 @@ export const userSchema = connection.define("user", {
     password: {
         type: DataTypes.STRING(256)
 
+
     }
 }, {
     timestamps: false,

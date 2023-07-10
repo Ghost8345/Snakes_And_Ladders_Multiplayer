@@ -8,10 +8,14 @@ import http from 'http';
 const app = express()
 const port = 4000
 const server = http.createServer(app);
-export const io = new Server(server)
+export const io = new Server(server);
+import sequelizeCli from './sequelize-cli.js';
 
-app.use(express.json())
+const app = express();
+const port = process.env.PORT || 4000;
 
+// Middleware
+app.use(express.json());
 
 app.use('/user',userRouter);
 app.use('/game',verifyToken,gameRouter);

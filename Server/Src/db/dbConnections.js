@@ -1,18 +1,16 @@
-import { Sequelize, DataTypes } from "sequelize";
-const connection = new Sequelize("snackladdergame", "root", "", {
-    host: "localhost",
-    dialect: "mysql"
-})
+import { Sequelize } from 'sequelize';
 
+import { config } from '../config/config.js';
 
-try {
-    await connection.authenticate();
-    console.log('Connection has been established successfully.');
-} catch (error) {
-    console.error('Unable to connect to the database:', error);
-}
+const sequelize = new Sequelize(
+    config.development.database,
+    config.development.username,
+    config.development.password,
+    {
+        host: config.development.host,
+        dialect: config.development.dialect,
+        logging: false,
+    }
+);
 
-
-
-
-export default connection; 
+export default sequelize;

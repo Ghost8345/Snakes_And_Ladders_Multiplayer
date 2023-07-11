@@ -1,9 +1,10 @@
-import connection from "../db/dbConnections.js";
-import { DataTypes } from "sequelize";
-import { userSchema } from "../models/user.js";
-import { gameSchema } from "../models/game.js";
+'use strict';
+import { DataTypes } from 'sequelize';
+import connection from '../db/dbConnections.js';
+import User from '../models/user.js';
+import Game from '../models/game.js';
 
-export const userGameSchema = connection.define("usergame", {
+const UserGame = connection.define('usergame', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -26,13 +27,16 @@ export const userGameSchema = connection.define("usergame", {
   },
 });
 
-userGameSchema.belongsTo(userSchema, {
-  foreignKey: "userId",
-  targetKey: "id",
+UserGame.belongsTo(User, {
+  foreignKey: 'userId',
+  targetKey: 'id',
 });
 
-userGameSchema.belongsTo(gameSchema, {
-  foreignKey: "gameId",
-  targetKey: "id",
+UserGame.belongsTo(Game, {
+  foreignKey: 'gameId',
+  targetKey: 'id',
 });
+
 connection.sync();
+
+export default UserGame;

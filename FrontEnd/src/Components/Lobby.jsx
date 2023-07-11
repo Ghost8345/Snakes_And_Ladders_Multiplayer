@@ -18,8 +18,8 @@ export default function Login() {
       <form>
         <div>
         </div>
-        <button type="Game" onClick={handleCreateGameClick}>Create Game</button>
-        <button type="Lobby2" onClick={handleJoinGameClick}>Join Game</button>
+        <button class="btn bg-main text-white" type="Game" onClick={handleCreateGameClick}>Create Game</button>
+        <button class="btn bg-main text-white" type="Lobby2" onClick={handleJoinGameClick}>Join Game</button>
       </form>
     </div>
 

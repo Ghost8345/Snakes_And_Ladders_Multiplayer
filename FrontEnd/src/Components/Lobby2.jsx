@@ -39,7 +39,7 @@ export default function Login() {
             onChange={handleIdChange}
           />
         </div>
-        <button type="Game" onClick={handleJoinClick}>Join !</button>
+        <button class="btn bg-main text-white" type="Game" onClick={handleJoinClick}>Join !</button>
       </form>
     </div>
 

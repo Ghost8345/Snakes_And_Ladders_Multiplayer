@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -19,8 +21,8 @@ export default function Login() {
           <form>
         <div>
         </div>
-        <button id="btn" class="btn bg-main text-white" type="Game" onClick={handleCreateGameClick}>Create Game</button>
-        <button id="btn" class="btn bg-main text-white" type="Lobby2" onClick={handleJoinGameClick}>Join Game</button>
+        <button id="btn" class="btn bg-main text-white"  onClick={handleCreateGameClick}>Create Game</button>
+        <button id="btn" class="btn bg-main text-white"  onClick={handleJoinGameClick}>Join Game</button>
       </form>
     </div> 
   </section>

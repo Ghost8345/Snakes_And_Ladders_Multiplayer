@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Register() {
     const [username, setUsername] = useState('');
@@ -54,9 +56,10 @@ export default function Register() {
                 onChange={handlePasswordChange}
               />
             </div>
-            <button id="btn" class="btn bg-main text-white" type="submit" onClick={handleRegisterClick} >Register</button>
+            <h1>    </h1>
+            <button id="btn" class="btn bg-main text-white"  onClick={handleRegisterClick} >Register</button>
             <p>Have an account?</p>
-            <button id="btn" class="btn bg-main text-white" type = "button" onClick={handleLoginClick}>Login</button>
+            <button id="btn" class="btn bg-main text-white" onClick={handleLoginClick}>Login</button>
           </form>
         </div>
       );

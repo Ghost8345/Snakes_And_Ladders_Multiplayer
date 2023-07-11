@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Login() {
   const [Id, setId] = useState('');
@@ -33,7 +35,7 @@ export default function Login() {
             onChange={handleIdChange}
           />
         </div>
-        <button id="btn" class="btn bg-main text-white" type="Game" onClick={handleJoinClick}>Join !</button>
+        <button id="btn" class="btn bg-main text-white" onClick={handleJoinClick}>Join !</button>
       </form>
     </div>
 

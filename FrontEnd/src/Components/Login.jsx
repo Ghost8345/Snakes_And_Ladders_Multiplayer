@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MDBBtn } from 'mdb-react-ui-kit';
-
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -55,10 +56,11 @@ export default function Login() {
             value={password}
             onChange={handlePasswordChange}
           />
+        <h1>   </h1>
         </div>
-        <MDBBtn id="btn" class="btn bg-main text-white" type="Login" onClick={handleLoginClick}>Login</MDBBtn>
+        <MDBBtn id="btn" class="btn bg-main text-white"  onClick={handleLoginClick}>Login</MDBBtn>
         <p>Or create a new account</p>
-        <button id="btn" class="btn bg-main text-white" type="button" onClick={handleRegisterClick}>Register</button>
+        <MDBBtn id="btn" class="btn bg-main text-white" onClick={handleRegisterClick}>Register</MDBBtn>
       </form>
     </div>
 

@@ -5,10 +5,9 @@ import { userRouter } from './modules/routes/user.routes.js';
 import { verifyToken } from './modules/middleware/auth.js';
 import { Server } from 'socket.io'
 import http from 'http';
-import sequelizeCli from './sequelize-cli.js';
 
 
-const app = express()
+const app = express() 
 const server = http.createServer(app);
 export const io = new Server(server);
 
@@ -75,7 +74,6 @@ io.on('connection', (socket) => {
     console.log('A user connected, user socket id = ',socket.id)
   });
 
-server.listen(port, () => console.log(`Server is listening on port ${port}!`))
 
   
     // // Custom event handler

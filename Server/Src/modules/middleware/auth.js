@@ -1,8 +1,6 @@
 import jwt from "jsonwebtoken"
-import { userSchema } from "../../models/user.js"
 import { secret } from "../../../config.js"
 
-import User from "../../models/user.js"
 
 export const verifyToken = async (req,res, next) => {
     let token = req.headers["authorization"]

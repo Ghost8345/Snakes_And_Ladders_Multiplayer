@@ -5,14 +5,13 @@ import { secret } from "../../../config.js"
 
 export const verifyToken = async (req,res, next) => {
     let token = req.headers["authorization"]
-    const {userId} = req.body;
     if(!token){
-        return res.status(403).send("No token passed")
+        return res.status(403).json({message: "No token passed"})
     }
     try {
         token = token.split(' ')[1]
     } catch (error) {
-        return res.status(401).send("Token not correct format")
+        return res.status(401).json({message: "Token not correct format"})
 
     }
 
@@ -25,7 +24,7 @@ export const verifyToken = async (req,res, next) => {
             userId: decodedPayload.userId// Add a new property
           };
     } catch (error) {
-        return res.status(401).send("Invalid token")
+        return res.status(401).json({message: "Invalid token"})
     }
     return next()
 }

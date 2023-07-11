@@ -1,49 +1,50 @@
-import { Model, DataTypes } from 'sequelize';
-import connection from '../db/dbConnections.js';
+'use strict';
 
-class Game extends Model {
-  static associate(models) {
-    // Define associations here
-  }
-}
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('games', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      roomId: {
+        type: Sequelize.STRING,
+      },
+      boardId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'boards', key: 'id' }
 
-Game.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    roomId: DataTypes.STRING,
-    boardId: DataTypes.INTEGER,
-    createdBy: DataTypes.INTEGER,
-    color: DataTypes.STRING,
-    status: {
-      type: DataTypes.STRING,
-      defaultValue: "Pending",
-    },
-    lastTurn: {
-      type: DataTypes.INTEGER,
-      references: { model: 'users', key: 'id' },
-      defaultValue: null,
-    },
-    numberOfPlayers: DataTypes.INTEGER,
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
+      },
+      createdBy: {
+        type: Sequelize.INTEGER,
+      },
+      color: {
+        type: Sequelize.STRING,
+      },
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: "Pending"
+      },
+      lastTurn: {
+        type: Sequelize.INTEGER,
+        defaultValue: null
+      },
+      numberOfPlayers: {
+        type: Sequelize.INTEGER,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+    });
   },
-  {
-    sequelize: connection,
-    modelName: 'Game',
-    tableName: 'games',
-  }
-);
 
-export default Game;
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('games');
+  },
+};

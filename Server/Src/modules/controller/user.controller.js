@@ -15,7 +15,6 @@ export const createUser = async (req, res) => {
         await userSchema.create({ userName, password });
         res.status(200).json({message: "success"});
     } catch (error) {
-        console.log(error, "----------");
         res.status(400).json({ message: "error " });
     }
 };
@@ -35,10 +34,6 @@ export const logIn = async (req, res) => {
     if (!user || !(await bcrypt.compare(password, user.password))) {
         return res.status(400).json({message:"invalid credentials"});
     }
-    console.log(user.password, " ", password)
-    console.log(">>", await bcrypt.compare(password, user.password))
-    
-    console.log("zzzzzzzzzzzz " ,user);
 
     const payload = {
         userName: userName,

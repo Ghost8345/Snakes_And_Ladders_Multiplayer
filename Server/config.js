@@ -9,7 +9,7 @@ export const config = {
     },
     test: {
         username: 'root',
-        password: 'root',
+        password: '',
         database: 'snackladdergame',
         host: 'localhost',
         dialect: 'mysql',

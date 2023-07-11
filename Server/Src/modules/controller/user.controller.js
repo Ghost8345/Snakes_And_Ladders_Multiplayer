@@ -1,7 +1,7 @@
-import { userSchema } from "../../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { secret } from "../../../config.js";
+import User from "../../models/user.js";
 export const createUser = async (req, res) => {
     let { userName, password } = req.body;
     if (!userName || !password) {
@@ -26,7 +26,7 @@ export const logIn = async (req, res) => {
     }
     console.log(req.body);
 
-    const user = await userSchema.findOne({
+    const user = await User.findOne({
         where: {
             userName: userName
         }

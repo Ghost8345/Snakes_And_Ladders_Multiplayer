@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { MDBBtn } from 'mdb-react-ui-kit';
 
 
 export default function Login() {
@@ -56,7 +56,7 @@ export default function Login() {
             onChange={handlePasswordChange}
           />
         </div>
-        <button id="btn" class="btn bg-main text-white" type="Login" onClick={handleLoginClick}>Login</button>
+        <MDBBtn id="btn" class="btn bg-main text-white" type="Login" onClick={handleLoginClick}>Login</MDBBtn>
         <p>Or create a new account</p>
         <button id="btn" class="btn bg-main text-white" type="button" onClick={handleRegisterClick}>Register</button>
       </form>

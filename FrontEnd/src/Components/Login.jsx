@@ -18,13 +18,13 @@ export default function Login() {
   };
 
   const handleRegisterClick = () => {
-    navigate("/Register");
+    navigate("/register");
   };
 
   const handleLoginClick = () => {
     console.log('Username:', username);
     console.log('Password:', password);
-    navigate("/Lobby");
+    navigate("/lobby");
   };
 
   const handleSubmit = (e) => {

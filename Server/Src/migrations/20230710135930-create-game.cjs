@@ -14,13 +14,30 @@ Game.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    roomId: DataTypes.INTEGER,
+    roomId: DataTypes.STRING,
     boardId: DataTypes.INTEGER,
     createdBy: DataTypes.INTEGER,
     color: DataTypes.STRING,
-    status: DataTypes.STRING,
-    lastTurn: DataTypes.INTEGER,
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: "Pending",
+    },
+    lastTurn: {
+      type: DataTypes.INTEGER,
+      references: { model: 'users', key: 'id' },
+      defaultValue: null,
+    },
     numberOfPlayers: DataTypes.INTEGER,
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
     sequelize: connection,

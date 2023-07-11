@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken"
-import { userSchema } from "../../models/user.js"
 import { secret } from "../../../config.js"
 
 

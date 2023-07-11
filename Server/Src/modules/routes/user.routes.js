@@ -1,7 +1,7 @@
 import express from 'express';
 export const userRouter = express.Router();
 import { createUser, logIn } from '../controller/user.controller.js';
-import { userSchema } from '../../models/user.js';
+import User from '../../models/user.js';
 userRouter.use(express.json());
 
 userRouter.get("/", async (req, res) => {

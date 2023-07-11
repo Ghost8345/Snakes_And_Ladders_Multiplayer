@@ -35,8 +35,8 @@ export default function Register() {
       
       return (
         <div id = "pages">
-          <h2>Snake and Ladders Muliplayer Game</h2>
-          <h2>Register</h2>
+          <h1>Snake and Ladders Muliplayer Game</h1>
+          <h2>Login</h2>
           <form onSubmit={handleSubmit}>
             <div>
               <label htmlFor="username">Username:</label>

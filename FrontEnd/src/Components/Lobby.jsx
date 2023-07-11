@@ -17,6 +17,7 @@ export default function Login() {
   return (
   <section id = "pages">
       <div>
+        <h1>     </h1>
         <h2>Lobby</h2>
           <form>
         <div>

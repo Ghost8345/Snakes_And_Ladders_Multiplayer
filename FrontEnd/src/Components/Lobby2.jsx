@@ -24,7 +24,7 @@ export default function Login() {
   return (
     <div id = "pages">
       <h2>Snake and Ladders Muliplayer Game</h2>
-      <h2>Write Game ID</h2>
+      <p>Write Game ID</p>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="Id">Game ID:</label>

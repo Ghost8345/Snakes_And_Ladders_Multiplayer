@@ -3,7 +3,7 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Game from "./Components/Game";
 import Lobby2 from "./Components/Lobby2";
-import { Route, Routes, Navigate, createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 import "./App.css";
 import Lobby from "./Components/Lobby";
@@ -17,7 +17,8 @@ const routers = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "game", element: <Game /> },
       { path: "lobby", element: <Lobby /> },
-      { path: "lobby2", element: <Lobby2 /> }
+      { path: "lobby2", element: <Lobby2 /> },
+      { path: "*", element: <Login />}
     ]
   }
 

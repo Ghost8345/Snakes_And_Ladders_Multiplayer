@@ -5,7 +5,6 @@ export default function Game() {
         <>
             <section id="home">
                 <div className="boardContainer">
-                <h2>Snake and Ladders Game</h2>
                 </div>
             </section>
         </>

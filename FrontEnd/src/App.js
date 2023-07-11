@@ -17,8 +17,6 @@ function App() {
       <Route path="/game" element={<Game />} />
       <Route path="/Lobby" element={<Lobby />} />
       <Route path="/Lobby2" element={<Lobby2 />} />
-
-      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
 
   );

@@ -14,7 +14,7 @@ Game.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    roomId: DataTypes.INTEGER,
+    roomId: DataTypes.STRING,
     boardId: DataTypes.INTEGER,
     createdBy: DataTypes.INTEGER,
     color: DataTypes.STRING,

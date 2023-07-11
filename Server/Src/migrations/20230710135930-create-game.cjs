@@ -9,27 +9,29 @@ module.exports = {
         autoIncrement: true,
       },
       roomId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       boardId: {
         type: Sequelize.INTEGER,
         references: { model: 'boards', key: 'id' }
+
       },
       createdBy: {
         type: Sequelize.INTEGER,
-        references: { model: 'users', key: 'id' }
+        references:{model: 'users', key: 'id' }
       },
       color: {
         type: Sequelize.STRING,
       },
       status: {
         type: Sequelize.STRING,
-        defaultValue: "pending"
+        defaultValue: "Pending"
       },
       lastTurn: {
         type: Sequelize.INTEGER,
         defaultValue: null,
-        references:{model:'users',key:'id'}
+        references: { model: 'users', key: 'id' }
+
       },
       numberOfPlayers: {
         type: Sequelize.INTEGER,

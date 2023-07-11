@@ -4,8 +4,10 @@ import jwt from "jsonwebtoken";
 import { secret } from "../../../config.js";
 export const createUser = async (req, res) => {
     let { userName, password } = req.body;
+    console.log(userName, password)
     if (!userName || !password) {
-        res.status(400).json({message:"Username and/or password missing"});
+        console.log("IN HEREE")
+        return res.status(400).json({message:"Username and/or password missing"});
     }
 
     const encryptedPassword = await bcrypt.hash(password, 10);
@@ -13,17 +15,17 @@ export const createUser = async (req, res) => {
     password = encryptedPassword
     try {
         await userSchema.create({ userName, password });
-        res.status(200).json({message: "success"});
+        return res.status(200).json({message: "success"});
     } catch (error) {
         console.log(error, "----------");
-        res.status(400).json({ message: "error " });
+        return res.status(400).json({ message: "error " });
     }
 };
 
 export const logIn = async (req, res) => {
     const { userName, password } = req.body;
     if (!userName || !password) {
-        res.status(400).json({message:"Username and/or password missing"});
+        return res.status(400).json({message:"Username and/or password missing"});
     }
     console.log(req.body);
 
@@ -33,12 +35,13 @@ export const logIn = async (req, res) => {
         }
     });
     if (!user || !(await bcrypt.compare(password, user.password))) {
+        console.log("In Invalid Credentials")
         return res.status(400).json({message:"invalid credentials"});
     }
     console.log(user.password, " ", password)
     console.log(">>", await bcrypt.compare(password, user.password))
     
-    console.log("zzzzzzzzzzzz " ,user);
+    console.log("zzzzzzzz```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````zzzz " ,user);
 
     const payload = {
         userName: userName,

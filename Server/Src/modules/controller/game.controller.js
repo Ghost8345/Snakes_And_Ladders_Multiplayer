@@ -1,7 +1,6 @@
 import { gameSchema } from "../../models/game.js";
 import { userGameSchema } from "../../models/usergame.js";
 import { io } from "../../index.js"
-let count = 0;
 import { elementSchema } from "../../models/element.js";
 import { boardSchema } from "../../models/board.js";
 
@@ -71,7 +70,7 @@ export const createGame = async (req, res) => {
   });
 
   if (!board) {
-    return res.status(400).json({ Message: "Board is not found " })
+    return res.status(400).json({ message: "Board is not found " })
   }
 
   const createdBy = userId
@@ -118,6 +117,11 @@ export const joinGame = async (req, res) => {
     },
   });
 
+  const playerFound = playersJoined.find(player => player.userId === userId)
+  if (playerFound){
+    return res.status(400).json({message:"User Already Joined"});
+  }
+
   console.log("Max Number of Players for this Game: ", gameFound.numberOfPlayers);
   if (playersJoined.length == gameFound.numberOfPlayers) {
 
@@ -154,16 +158,9 @@ export const joinGame = async (req, res) => {
 };
 
 
-
-
-
-
-
-
-
-
 export const move = async (req, res) => {
   const { userId, gameId } = req.body;
+  console.log("userID: ", userId, "gameId : " , gameId)
 
   const game = await gameSchema.findOne({
     where: {

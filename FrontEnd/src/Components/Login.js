@@ -1,13 +1,14 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { logInUser } from "../Api/userApi";
 
 export default function Login() {
-    const [username, setUsername] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
     const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
+        setUserName(e.target.value);
       };
 
     const handlePasswordChange = (e) => {
@@ -18,11 +19,25 @@ export default function Login() {
         navigate("/register");
       };
     
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // Logic for handling form submission (e.g., API call, validation, etc.)
-        console.log('Username:', username);
+        console.log('Username:', userName);
         console.log('Password:', password);
+
+        try{
+          const response = await logInUser({
+            userName,
+            password
+          })
+          const responseBody = await response.json()
+          console.log(responseBody)
+          localStorage.setItem('token', responseBody.token)
+          navigate("/game")
+        }
+        catch(error){
+          console.log(error.message)
+        }
       };
       
       return (
@@ -34,7 +49,7 @@ export default function Login() {
               <input
                 type="text"
                 id="username"
-                value={username}
+                value={userName}
                 onChange={handleUsernameChange}
               />
             </div>

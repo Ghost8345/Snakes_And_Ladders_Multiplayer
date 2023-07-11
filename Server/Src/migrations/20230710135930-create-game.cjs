@@ -28,7 +28,9 @@ module.exports = {
       },
       lastTurn: {
         type: Sequelize.INTEGER,
-        defaultValue: null
+        defaultValue: null,
+        references: { model: 'users', key: 'id' }
+
       },
       numberOfPlayers: {
         type: Sequelize.INTEGER,

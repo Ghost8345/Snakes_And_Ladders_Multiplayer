@@ -1,7 +1,7 @@
 export const config = {
     development: {
         username: 'root',
-        password: '',
+        password: 'root',
         database: 'snackladdergame',
         host: 'localhost',
         dialect: 'mysql',
@@ -9,7 +9,7 @@ export const config = {
     },
     test: {
         username: 'root',
-        password: '',
+        password: 'root',
         database: 'snackladdergame',
         host: 'localhost',
         dialect: 'mysql',
@@ -17,10 +17,13 @@ export const config = {
     },
     production: {
         username: 'root',
-        password: '',
+        password: 'root',
         database: 'snackladdergame',
         host: 'localhost',
         dialect: 'mysql',
         logging: false,
     },
 };
+
+
+export const secret = "fdsoiuhrjiuhiuegrS"

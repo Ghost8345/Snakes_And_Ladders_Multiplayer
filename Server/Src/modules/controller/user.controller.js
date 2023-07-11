@@ -1,34 +1,28 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { secret } from "../../../config.js";
 import User from "../../models/user.js";
 export const createUser = async (req, res) => {
     let { userName, password } = req.body;
     if (!userName || !password) {
-        res.status(400).send("Username and/or password missing");
+        res.status(400).json({message:"Username and/or password missing"});
     }
 
     const encryptedPassword = await bcrypt.hash(password, 10);
     console.log(encryptedPassword);
     password = encryptedPassword
     try {
-        let users = await User.create({ userName, password });
-        const payload = {
-            userName: userName,
-            password: encryptedPassword
-        };
-        const token = jwt.sign(payload, "fdsoiuhrjiuhiuegrS");
-
-        res.json({ token: token, payload: payload });
+        await userSchema.create({ userName, password });
+        res.status(200).json({message: "success"});
     } catch (error) {
-        console.log(error, "----------");
-        res.json({ message: "error " });
+        res.status(400).json({ message: "error " });
     }
 };
 
 export const logIn = async (req, res) => {
     const { userName, password } = req.body;
     if (!userName || !password) {
-        res.status(400).send("Username and/or password missing");
+        res.status(400).json({message:"Username and/or password missing"});
     }
     console.log(req.body);
 
@@ -37,18 +31,16 @@ export const logIn = async (req, res) => {
             userName: userName
         }
     });
-    console.log(user.password, " ", password)
-    console.log(">>", await bcrypt.compare(password, user.password))
     if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.status(400).send("invalid credentials");
+        return res.status(400).json({message:"invalid credentials"});
     }
-    console.log(user);
 
     const payload = {
         userName: userName,
-        password: user.password
+        password: user.password,
+        userId: user.id
     };
-    const token = jwt.sign(payload, "fdsoiuhrjiuhiuegrS");
+    const token  = jwt.sign(payload, secret);
 
-    return res.status(200).json({ token: token, payload: payload });
+    return res.status(200).json({ message:"success",token: token});
 };

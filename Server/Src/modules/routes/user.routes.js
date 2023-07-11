@@ -5,13 +5,7 @@ import User from '../../models/user.js';
 userRouter.use(express.json());
 
 userRouter.get("/", async (req, res) => {
-    try {
-        const users = await User.findAll({});
-        res.status(200).json({ users });
-    } catch (error) {
-        console.error('Error retrieving users:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
+    res.status(200).json({message: "Responding from user router"});
 });
 
 userRouter.post("/createUser", createUser);

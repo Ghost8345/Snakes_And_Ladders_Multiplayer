@@ -5,7 +5,7 @@ import { userSchema } from '../../models/user.js';
 userRouter.use(express.json());
 
 userRouter.get("/", async (req, res) => {
-    res.status(200).json("Responding from user router");
+    res.status(200).json({message: "Responding from user router"});
 });
 
 userRouter.post("/createUser", createUser);

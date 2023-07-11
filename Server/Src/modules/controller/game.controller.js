@@ -38,15 +38,35 @@ SOCKET
 
 
 
+export const getAllGames = async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+      const games = await gameSchema.findAll({
+          where: {
+              status: "pending"
+          }
+      });
+      res.status(200).json({ games });
+  } catch (error) {
+      console.error('Error retrieving games:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+
+
+
+
+
 export const createGame = async (req, res) => {
-
-
   const { boardId, numberOfPlayers, userId} = req.body;
   let status = "pending"
   let lastTurn = null
   const board = await boardSchema.findOne({
     where: {
       id: boardId
+
     }
   });
 
@@ -73,6 +93,9 @@ export const createGame = async (req, res) => {
   res.status(200).json({ games, board });
 };
 
+
+
+
 export const joinGame = async (req, res) => {
   let { userId, gameId } = req.body;
   let position = 0;
@@ -84,8 +107,9 @@ export const joinGame = async (req, res) => {
     },
   });
 
+
   if (!gameFound) {
-    return res.status(400).send("Game Not Found");
+    return res.status(400).json({message:"Game Not Found"});
   }
 
   const playersJoined = await userGameSchema.findAll({
@@ -96,7 +120,8 @@ export const joinGame = async (req, res) => {
 
   console.log("Max Number of Players for this Game: ", gameFound.numberOfPlayers);
   if (playersJoined.length == gameFound.numberOfPlayers) {
-    return res.status(400).send("Game has reached the number of players required");
+
+    return res.status(400).json({message:"Game has reached the number of players required"});
   } else if (playersJoined.length == gameFound.numberOfPlayers - 1) {
     const color = colors[playersJoined.length]
 
@@ -116,15 +141,26 @@ export const joinGame = async (req, res) => {
     players.push(userId)
 
     console.log(players)
-    return res.status(200).json(players)
+
+    return res.status(200).json({message: "success", players: players})
   } else {
     const color = colors[playersJoined.length]
 
     await userGameSchema.create({ userId, gameId, position, status, color });
-    return res.status(200).send("Succesfuly Joined")
+
+    return res.status(200).json({message: "success"})
   }
 
 };
+
+
+
+
+
+
+
+
+
 
 export const move = async (req, res) => {
   const { userId, gameId } = req.body;
@@ -136,11 +172,11 @@ export const move = async (req, res) => {
   });
 
   if (!game) {
-    return res.status(400).send("Game Not Found");
+    return res.status(400).json({message:"Game Not Found"});
   }
 
   if (game.status == "Finished") {
-    return res.status(400).send("Game is Finished");
+    return res.status(400).json({message:"Game is Finished"});
   }
 
   const playersList = await userGameSchema.findAll({
@@ -155,6 +191,7 @@ export const move = async (req, res) => {
     }
   })
 
+
   console.log(elements)
 
 
@@ -167,7 +204,8 @@ export const move = async (req, res) => {
 
 
   if (!playerIds.includes(userId)) {
-    return res.status(400).send("Player Not in Players List")
+
+    return res.status(400).json({message:"Player Not in Players List"})
   }
 
 
@@ -178,13 +216,15 @@ export const move = async (req, res) => {
 
   if (!lastTurn) {
     if (playerIds[0] != userId) {
-      return res.status(400).send("Wrong Turn")
+
+      return res.status(400).json({message:"Wrong Turn"})
     }
   }
   else {
 
     if (playerIds[indexOfCurrentPlayer] != userId) {
-      return res.status(400).send("Wrong Turn")
+
+      return res.status(400).json({message:"Wrong Turn"})
     }
   }
 
@@ -269,7 +309,8 @@ export const updateBoard = async (req, res) => {
   });
 
   if (!game) {
-    return res.status(400).send("Game Not Found");
+
+    return res.status(400).json({message:"Game Not Found"});
   }
 
   const players = await userGameSchema.findAll({
@@ -282,7 +323,8 @@ export const updateBoard = async (req, res) => {
   console.log("Player: ", player)
 
   if (!player) {
-    return res.status(400).send("Player not found in game");
+
+    return res.status(400).json({message:"Player not found in game"});
   }
 
   const board = await boardSchema.findOne({
@@ -297,6 +339,7 @@ export const updateBoard = async (req, res) => {
     }
   })
 
-  return res.status(200).json({ players, elements, game, board })
+
+  return res.status(200).json({ message:"success", players, elements, game, board })
 
 };

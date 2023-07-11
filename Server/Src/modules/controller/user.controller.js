@@ -5,7 +5,7 @@ import { secret } from "../../../config.js";
 export const createUser = async (req, res) => {
     let { userName, password } = req.body;
     if (!userName || !password) {
-        res.status(400).send("Username and/or password missing");
+        res.status(400).json({message:"Username and/or password missing"});
     }
 
     const encryptedPassword = await bcrypt.hash(password, 10);
@@ -23,7 +23,7 @@ export const createUser = async (req, res) => {
 export const logIn = async (req, res) => {
     const { userName, password } = req.body;
     if (!userName || !password) {
-        res.status(400).send("Username and/or password missing");
+        res.status(400).json({message:"Username and/or password missing"});
     }
     console.log(req.body);
 
@@ -35,7 +35,7 @@ export const logIn = async (req, res) => {
     console.log(user.password, " ", password)
     console.log(">>", await bcrypt.compare(password, user.password))
     if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.status(400).send("invalid credentials");
+        return res.status(400).json({message:"invalid credentials"});
     }
     console.log(user);
 
@@ -46,5 +46,5 @@ export const logIn = async (req, res) => {
     };
     const token = jwt.sign(payload, secret);
 
-    return res.status(200).json({ token: token});
+    return res.status(200).json({ message:"success",token: token});
 };

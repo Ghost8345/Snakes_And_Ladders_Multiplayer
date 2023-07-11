@@ -37,14 +37,14 @@ export const logIn = async (req, res) => {
     if (!user || !(await bcrypt.compare(password, user.password))) {
         return res.status(400).json({message:"invalid credentials"});
     }
-    console.log(user);
+    console.log("zzzzzzzzzzzz " ,user);
 
     const payload = {
         userName: userName,
         password: user.password,
-        userId: user.userId
+        userId: user.id
     };
-    const token = jwt.sign(payload, secret);
+    const token  = jwt.sign(payload, secret);
 
     return res.status(200).json({ message:"success",token: token});
 };

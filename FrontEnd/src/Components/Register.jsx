@@ -56,6 +56,7 @@ export default function Register() {
               />
             </div>
             <button type="submit" onClick={handleRegisterClick} >Register</button>
+            <p>Have an account?</p>
             <button type = "button" onClick={handleLoginClick}>Login</button>
 
           </form>

@@ -86,11 +86,19 @@ export const createGame = async (req, res) => {
 
   await userG.create({ userId, gameId, position, status, color });
 
-  // TODO : assign a unique string as game id and add it to the database. this string will be the room id
-  const roomId = "room-" + boardId + "-" + createdBy
+  const date1 = new Date('January 1, 2020');
+  const timestamp1 = date1.getTime();
+  const date2 = new Date.now()
+  const timestamp2 = date2.getTime()
+
+  const timestamp = timestamp2 - timestamp1
+  const roomId = "room-" + timestamp + "-" + gameId + "-" + createdBy
+  const encodedRoomID = btoa(roomId);
+
+
   io.on('connection', (socket) => {
-    socket.join(roomId);
-    console.log("connected inside of create game")
+    socket.join(encodedRoomID);
+    console.log("connected inside of create game response")
   });
   res.status(200).json({ games, board });
 };
@@ -102,7 +110,7 @@ export const joinGame = async (req, res) => {
   let { userId, gameId } = req.body;
   let position = 0;
   let status = "active";
-
+  // find game with that id
   const gameFound = await Game.findOne({
     where: {
       id: gameId,
@@ -114,6 +122,7 @@ export const joinGame = async (req, res) => {
     return res.status(400).json({ message: "Game Not Found" });
   }
 
+  // get players in this game
   const playersJoined = await UserGame.findAll({
     where: {
       gameId: gameId,
@@ -121,10 +130,9 @@ export const joinGame = async (req, res) => {
   });
 
   console.log("Max Number of Players for this Game: ", gameFound.numberOfPlayers);
-  if (playersJoined.length == gameFound.numberOfPlayers) {
-
+  if (playersJoined.length == gameFound.numberOfPlayers) { // if game full
     return res.status(400).json({ message: "Game has reached the number of players required" });
-  } else if (playersJoined.length == gameFound.numberOfPlayers - 1) {
+  } else if (playersJoined.length == gameFound.numberOfPlayers - 1) {  //last player
     const color = colors[playersJoined.length]
 
     await UserGame.create({ userId, gameId, position, status, color });
@@ -144,12 +152,20 @@ export const joinGame = async (req, res) => {
 
     console.log(players)
 
+    // fire event for the rest of the room that player joined
+    const roomId = gameFound.roomId
+    io.on('connection', (socket) => {
+      socket.join(roomId);
+    });
+
+    io.to(roomId).emit('playerjoined',{message:'last user joined', players:players })
+
     return res.status(200).json({ message: "success", players: players })
-  } else {
+  } else { // general case
     const color = colors[playersJoined.length]
 
     await UserGame.create({ userId, gameId, position, status, color });
-
+    io.to(roomId).emit('playerjoined',{message:'user joined', players:players })
     return res.status(200).json({ message: "success" })
   }
 
@@ -173,13 +189,15 @@ export const move = async (req, res) => {
     },
   });
 
+  // fail checks
   if (!game) {
     return res.status(400).json({ message: "Game Not Found" });
   }
-
   if (game.status == "Finished") {
     return res.status(400).json({ message: "Game is Finished" });
   }
+
+
 
   const playersList = await UserGame.findAll({
     where: {
@@ -205,8 +223,7 @@ export const move = async (req, res) => {
 
 
 
-  if (!playerIds.includes(userId)) {
-
+  if (!playerIds.includes(userId)) { // imposter case
     return res.status(400).json({ message: "Player Not in Players List" })
   }
 
@@ -216,16 +233,13 @@ export const move = async (req, res) => {
   const indexOfCurrentPlayer = (indexOfLastPlayer + 1) % game.numberOfPlayers
 
 
-  if (!lastTurn) {
+  if (!lastTurn) { // the first player turn 
     if (playerIds[0] != userId) {
-
       return res.status(400).json({ message: "Wrong Turn" })
     }
   }
-  else {
-
+  else { 
     if (playerIds[indexOfCurrentPlayer] != userId) {
-
       return res.status(400).json({ message: "Wrong Turn" })
     }
   }
@@ -265,7 +279,6 @@ export const move = async (req, res) => {
   }
 
 
-
   const userGameId = playersList.find(player => player.userId === userId).id
   console.log(userGameId)
 
@@ -288,6 +301,14 @@ export const move = async (req, res) => {
   )
 
   const movement = playerPostion !== newPosition ? "Move Successful" : "Move Failed (overflow)"
+  // fire update for the room id 
+  const roomId = game.roomId
+  io.to(roomId).emit('update',{
+    status: movement,
+    positions: positions,
+    dice: dice
+  })
+
 
   return res.status(200).json({
     status: movement,
@@ -296,7 +317,15 @@ export const move = async (req, res) => {
   })
 };
 
+
+
+
+
+
 const rollDice = () => { return Math.floor(Math.random() * (6)) + 1 }
+
+
+
 
 export const updateBoard = async (req, res) => {
 

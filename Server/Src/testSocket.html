@@ -27,33 +27,28 @@
       socket.emit('joinRoom', message);
     }
 
+    socket.on('playerjoined', ()=>{
+      // refresh waiting list using api
+    })
+
+
     socket.on('update', (data) => {
-      console.log('update board socket msg:', data);
-      updateBoard()
+      // call update board api
     });
 
-    socket.on('kick_inactive', ()=>{
-      leaveGame()
+    socket.on('kickinactive', ()=>{
+      // call leave api
     })
-    function updateBoard() {
-      
-    }
 
-    function leaveGame(){
-
-    }
     function createGame() {
       const url = 'http://localhost:4000/game/createGame';
       const body = {
         boardId: '1',
-        createdBy: '1',
-        status: 'ACTIVE',
-        lastTurn: 1,
         numberOfPlayers: 4
       };
       const headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Im1vbW8yIiwicGFzc3dvcmQiOiIkMmEkMTAkYmVmUnpiTE9QNkp0dXpmdUE2TS4zLmpIQnFXYlFqakdhQ2dCM0RjTjdnRWU0ZnRsYWFobUsiLCJpYXQiOjE2ODg5NzkyODh9.v8Jjz6c21eF7t30xPlHCeokm32uaecv-jZLQ6o-Wl50'
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Im1vbW8zIiwicGFzc3dvcmQiOiIkMmEkMTAkdFVHZ0FWMjZVZThIUktqRmRYM1NVZVdNOWY2dUJjbkouR0tLd2hQRmJBem1iWTRZZElVcHEiLCJ1c2VySWQiOjMsImlhdCI6MTY4OTA2Mzk5OH0.mHJQxUhvrMa5YoBmwIE0y6Ola7lOvsGcj-hpQV_KlGw'
       };
 
       fetch(url, {
@@ -65,6 +60,7 @@
         .then(data => {
           console.log('Game created:', data);
           // Connect to the Socket.IO server after creating the game
+          
           socket.connect();
         })
         .catch(error => {

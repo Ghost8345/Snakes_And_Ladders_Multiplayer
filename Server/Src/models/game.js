@@ -1,32 +1,46 @@
-import { Model, DataTypes } from 'sequelize';
-import connection from '../db/dbConnections.js';
+import { userSchema } from "./user.js";
+import { boardSchema } from "./board.js";
+import connection from "../db/dbConnections.js";
+import {DataTypes } from "sequelize";
 
-class Game extends Model {
-  static associate(models) {
-    // Define associations here
-  }
-}
-
-Game.init(
-  {
+export const gameSchema = connection.define("game", {
     id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
     },
-    roomId: DataTypes.INTEGER,
-    boardId: DataTypes.INTEGER,
-    createdBy: DataTypes.INTEGER,
-    color: DataTypes.STRING,
-    status: DataTypes.STRING,
-    lastTurn: DataTypes.INTEGER,
-    numberOfPlayers: DataTypes.INTEGER,
-  },
-  {
-    sequelize: connection,
-    modelName: 'Game',
-    tableName: 'games',
-  }
-);
+    boardId: {
+        type: DataTypes.INTEGER
+    },
+    createdBy: {
+        type: DataTypes.INTEGER
+    },
+    status: {
+        type: DataTypes.STRING(255)
+    },
+    lastTurn: {
+        type: DataTypes.INTEGER
+    },
+    numberOfPlayers:{
+        type: DataTypes.INTEGER
+    }
 
-export default Game;
+});
+connection.sync();
+
+
+
+gameSchema.belongsTo(userSchema, {
+    foreignKey: "createdBy",
+    targetKey: "id",
+  });
+  gameSchema.belongsTo(boardSchema, {
+    foreignKey: "boardId",
+    targetKey: "id",
+  });
+  gameSchema.belongsTo(userSchema, {
+    foreignKey: "lastTurn",
+    targetKey: "id",
+  });
+
+  connection.sync();

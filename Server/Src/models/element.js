@@ -1,23 +1,28 @@
-'use strict';
-import { Model, DataTypes } from 'sequelize';
-import connection from '../db/dbConnections.js';
 
-class Element extends Model {
-  static associate(models) {
-    // Define associations here
-  }
-}
+import { boardSchema } from "./board";
+import connection from "../db/dbConnections.js";
+import { DataTypes } from "sequelize";
 
-Element.init(
-  {
-    goFrom: DataTypes.INTEGER,
-    goTo: DataTypes.INTEGER,
-    boardId: DataTypes.INTEGER,
+export const elementSchema = connection.define("element", {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
   },
-  {
-    sequelize: connection,
-    modelName: 'Element',
-  }
-);
+  goFrom: {
+    type: DataTypes.INTEGER,
+  },
+  goTo: {
+    type: DataTypes.INTEGER,
+  },
+  boardId: {
+    type: DataTypes.INTEGER,
+  },
+});
 
-export default Element;
+gameSchema.belongsTo(boardSchema, {
+  foreignKey: "boardId",
+  targetKey: "id",
+});
+
+connection.sync();

@@ -13,15 +13,16 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h2>Lobby</h2>
-      <form>
+  <section id = "pages">
+      <div>
+        <h2>Lobby</h2>
+          <form>
         <div>
         </div>
-        <button class="btn bg-main text-white" type="Game" onClick={handleCreateGameClick}>Create Game</button>
-        <button class="btn bg-main text-white" type="Lobby2" onClick={handleJoinGameClick}>Join Game</button>
+        <button id="btn" class="btn bg-main text-white" type="Game" onClick={handleCreateGameClick}>Create Game</button>
+        <button id="btn" class="btn bg-main text-white" type="Lobby2" onClick={handleJoinGameClick}>Join Game</button>
       </form>
-    </div>
-
+    </div> 
+  </section>
   );
 }

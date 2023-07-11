@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 
-
 export default function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -33,7 +32,7 @@ export default function Register() {
       };
       
       return (
-        <div>
+        <div id = "pages">
           <h2>Snake and Ladders Muliplayer Game</h2>
           <h2>Register</h2>
           <form onSubmit={handleSubmit}>
@@ -55,10 +54,9 @@ export default function Register() {
                 onChange={handlePasswordChange}
               />
             </div>
-            <button class="btn bg-main text-white" type="submit" onClick={handleRegisterClick} >Register</button>
+            <button id="btn" class="btn bg-main text-white" type="submit" onClick={handleRegisterClick} >Register</button>
             <p>Have an account?</p>
-            <button class="btn bg-main text-white" type = "button" onClick={handleLoginClick}>Login</button>
-
+            <button id="btn" class="btn bg-main text-white" type = "button" onClick={handleLoginClick}>Login</button>
           </form>
         </div>
       );

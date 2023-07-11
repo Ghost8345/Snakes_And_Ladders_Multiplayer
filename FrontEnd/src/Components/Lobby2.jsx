@@ -13,12 +13,6 @@ export default function Login() {
     navigate("/Game");
   };
 
-
-  const handleLoginClick = () => {
-    console.log('Id:', Id);
-    navigate("/Game");
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // Logic for handling form submission (e.g., API call, validation, etc.)
@@ -26,7 +20,7 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div id = "pages">
       <h2>Snake and Ladders Muliplayer Game</h2>
       <h2>Write Game ID</h2>
       <form onSubmit={handleSubmit}>
@@ -39,7 +33,7 @@ export default function Login() {
             onChange={handleIdChange}
           />
         </div>
-        <button class="btn bg-main text-white" type="Game" onClick={handleJoinClick}>Join !</button>
+        <button id="btn" class="btn bg-main text-white" type="Game" onClick={handleJoinClick}>Join !</button>
       </form>
     </div>
 

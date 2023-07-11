@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
+
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -33,9 +34,8 @@ export default function Login() {
   };
 
   return (
-    <div>
-
-      <h2>Snake and Ladders Muliplayer Game</h2>
+    <div id = "pages">
+      <h1>Snake and Ladders Muliplayer Game</h1>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -56,9 +56,9 @@ export default function Login() {
             onChange={handlePasswordChange}
           />
         </div>
-        <button class="btn bg-main text-white" type="Login" onClick={handleLoginClick}>Login</button>
+        <button id="btn" class="btn bg-main text-white" type="Login" onClick={handleLoginClick}>Login</button>
         <p>Or create a new account</p>
-        <button class="btn bg-main text-white" type="button" onClick={handleRegisterClick}>Register</button>
+        <button id="btn" class="btn bg-main text-white" type="button" onClick={handleRegisterClick}>Register</button>
       </form>
     </div>
 

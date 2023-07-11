@@ -3,7 +3,7 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Game from "./Components/Game";
 import Lobby2 from "./Components/Lobby2";
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './index.css';
 import "./App.css";
 import Lobby from "./Components/Lobby";

@@ -8,17 +8,52 @@ import './index.css';
 import "./App.css";
 import Lobby from "./Components/Lobby";
 import Layout from "./Components/Layout/Layout";
+import ProtectedRoutes from "./Components/ProtectedRoutes/ProtectedRoutes";
 
 
 const routers = createBrowserRouter([
   {
     path: "", element: <Layout />, children: [
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
-      { path: "game", element: <Game /> },
-      { path: "lobby", element: <Lobby /> },
-      { path: "lobby2", element: <Lobby2 /> },
-      { path: "*", element: <Login />}
+      {
+        index: true, element:
+
+          <Login />
+
+      },
+      {
+        path: "register", element:
+
+          <Register />
+      },
+      {
+        path: "game", element:
+
+
+          <ProtectedRoutes>
+            <Game />
+          </ProtectedRoutes>
+
+      },
+      {
+        path: "lobby", element:
+          <ProtectedRoutes>
+            <Lobby />
+          </ProtectedRoutes>
+
+      },
+      {
+        path: "lobby2", element:
+
+          <ProtectedRoutes>
+            <Lobby2 />
+          </ProtectedRoutes>
+
+      },
+      {
+        path: "*", element:
+
+            <Login />
+      }
     ]
   }
 

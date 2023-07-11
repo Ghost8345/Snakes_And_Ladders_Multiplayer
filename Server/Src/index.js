@@ -6,6 +6,7 @@ import { verifyToken } from './modules/middleware/auth.js';
 import { Server } from 'socket.io'
 import http from 'http';
 import Element from './models/element.js'
+import cors from 'cors';
 const app = express() 
 const server = http.createServer(app);
 export const io = new Server(server);
@@ -15,7 +16,10 @@ const port = process.env.PORT || 4000;
 
 // Middleware
 app.use(express.json());
-
+// Allow all headers
+app.use(cors({
+    exposedHeaders: '*'
+  }));
 app.use('/user',userRouter);
 app.use('/game',verifyToken,gameRouter);
 

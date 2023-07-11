@@ -1,14 +1,13 @@
-import { gameSchema } from "../../models/game.js";
-import { userGameSchema } from "../../models/usergame.js";
-import { elementSchema } from "../../models/element.js";
-import { boardSchema } from "../../models/board.js";
-
+import UserGame from "../../models/usergame.js";
+import Board from '../../models/board.js'
+import Game from '../../models/game.js';
+import Element from '../../models/element.js'
 export const createGame = async (req, res) => {
 
   const { boardId, createdBy, numberOfPlayers, userId, color } = req.body;
   let status = "pending"
   let lastTurn = null
-  const board = await boardSchema.findOne({
+  const board = await Board.findOne({
     where: {
       id: boardId
     }
@@ -18,12 +17,12 @@ export const createGame = async (req, res) => {
     return res.status(400).json({ Message: "Board is not found " })
   }
 
-  const games = await gameSchema.create({ boardId, createdBy, status, lastTurn, numberOfPlayers });
+  const games = await Game.create({ boardId, createdBy, status, lastTurn, numberOfPlayers });
   status = "active"
   let position = 0;
   let gameId = games.id;
 
-  await userGameSchema.create({ userId, gameId, position, status, color });
+  await UserGame.create({ userId, gameId, position, status, color });
 
 
   res.status(200).json({ games, board });
@@ -34,7 +33,7 @@ export const joinGame = async (req, res) => {
   let position = 0;
   let status = "active";
 
-  const gameFound = await gameSchema.findOne({
+  const gameFound = await Game.findOne({
     where: {
       id: gameId,
     },
@@ -44,7 +43,7 @@ export const joinGame = async (req, res) => {
     return res.status(400).send("Game Not Found");
   }
 
-  const playersJoined = await userGameSchema.findAll({
+  const playersJoined = await UserGame.findAll({
     where: {
       gameId: gameId,
     },
@@ -54,8 +53,8 @@ export const joinGame = async (req, res) => {
   if (playersJoined.length == gameFound.numberOfPlayers) {
     return res.status(400).send("Game has reached the number of players required");
   } else if (playersJoined.length == gameFound.numberOfPlayers - 1) {
-    await userGameSchema.create({ userId, gameId, position, status, color });
-    await gameSchema.update(
+    await UserGame.create({ userId, gameId, position, status, color });
+    await Game.update(
       { status: "Started" },
       {
         where: {
@@ -72,7 +71,7 @@ export const joinGame = async (req, res) => {
     console.log(players)
     return res.status(200).json(players)
   } else {
-    await userGameSchema.create({ userId, gameId, position, status, color });
+    await UserGame.create({ userId, gameId, position, status, color });
     return res.status(200).send("Succesfuly Joined")
   }
 
@@ -81,7 +80,7 @@ export const joinGame = async (req, res) => {
 export const move = async (req, res) => {
   const { userId, gameId } = req.body;
 
-  const game = await gameSchema.findOne({
+  const game = await Game.findOne({
     where: {
       id: gameId,
     },
@@ -95,13 +94,13 @@ export const move = async (req, res) => {
     return res.status(400).send("Game is Finished");
   }
 
-  const playersList = await userGameSchema.findAll({
+  const playersList = await UserGame.findAll({
     where: {
       gameId: gameId,
     },
   });
 
-  const elements = await elementSchema.findAll({
+  const elements = await Element.findAll({
     where: {
       boardId: game.boardId
     }
@@ -159,7 +158,7 @@ export const move = async (req, res) => {
   }
 
   if (newPosition === 20) {
-    await gameSchema.update(
+    await Game.update(
       { status: "Finished" },
       {
         where: {
@@ -174,7 +173,7 @@ export const move = async (req, res) => {
   const userGameId = playersList.find(player => player.userId === userId).id
   console.log(userGameId)
 
-  await userGameSchema.update(
+  await UserGame.update(
     { status: "active", position: newPosition },
     {
       where: {
@@ -183,7 +182,7 @@ export const move = async (req, res) => {
     }
   );
 
-  await gameSchema.update(
+  await Game.update(
     { lastTurn: userId },
     {
       where: {
@@ -208,7 +207,7 @@ export const updateBoard = async (req, res) => {
   const { gameId } = req.params
 
 
-  const game = await gameSchema.findOne({
+  const game = await Game.findOne({
     where: {
       id: gameId,
     },
@@ -218,7 +217,7 @@ export const updateBoard = async (req, res) => {
     return res.status(400).send("Game Not Found");
   }
 
-  const players = await userGameSchema.findAll({
+  const players = await UserGame.findAll({
     where: {
       gameId: gameId,
     },
@@ -231,13 +230,13 @@ export const updateBoard = async (req, res) => {
     return res.status(400).send("Player not found in game");
   }
 
-  const board = await boardSchema.findOne({
+  const board = await Board.findOne({
     where: {
       id: game.boardId
     }
   })
 
-  const elements = await elementSchema.findAll({
+  const elements = await Element.findAll({
     where: {
       boardId: game.boardId
     }

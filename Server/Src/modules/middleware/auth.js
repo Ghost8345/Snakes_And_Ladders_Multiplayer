@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken"
-import { userSchema } from "../../models/user.js"
+import User from "../../models/user.js"
 
-export const verifyToken = async (req,res, next) => {
-    
+export const verifyToken = async (req, res, next) => {
+
     let token = req.headers["authorization"]
-    const {userId} = req.body;
-    if(!token){
+    const { userId } = req.body;
+    if (!token) {
         return res.status(403).send("No token passed")
     }
     try {
@@ -17,10 +17,10 @@ export const verifyToken = async (req,res, next) => {
 
     try {
         console.log("token before verify:", token)
-        const decodedPayload = jwt.verify(token,"fdsoiuhrjiuhiuegrS")
+        const decodedPayload = jwt.verify(token, "fdsoiuhrjiuhiuegrS")
         console.log("Decoded Payload after verify:", decodedPayload)
 
-        const user = await userSchema.findOne({
+        const user = await User.findOne({
             where: {
                 userName: decodedPayload.userName
             }
@@ -28,7 +28,7 @@ export const verifyToken = async (req,res, next) => {
 
         console.log(user)
 
-        if (user.id !== userId){
+        if (user.id !== userId) {
             return res.status(401).send("Invalid token")
         }
 

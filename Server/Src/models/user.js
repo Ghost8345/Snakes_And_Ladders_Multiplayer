@@ -1,24 +1,25 @@
-import { DataTypes } from "sequelize";
-import connection from "../db/dbConnections.js";
-export const userSchema = connection.define("user", {
+'use strict';
+import { DataTypes } from 'sequelize';
+import connection from '../db/dbConnections.js';
 
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    }
-    ,
-    userName: {
-        type: DataTypes.STRING(50)
-    },
-    password: {
-        type: DataTypes.STRING(255)
-
-    }
+const User = connection.define('user', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  userName: {
+    type: DataTypes.STRING(50),
+  },
+  password: {
+    type: DataTypes.STRING(255),
+  },
 }, {
-    timestamps: false,
-    createdAt: false,
-    updatedAt: false
+  timestamps: false,
+  createdAt: false,
+  updatedAt: false,
 });
 
 connection.sync();
+
+export default User;

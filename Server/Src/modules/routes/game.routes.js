@@ -1,14 +1,14 @@
 import express from 'express';
 export const gameRouter = express.Router();
 import { createGame, joinGame, move, updateBoard } from '../controller/game.controller.js';
-import { gameSchema } from '../../models/game.js';
+import Game from '../../models/game.js';
 gameRouter.use(express.json());
 
 gameRouter.get("/", async (req, res) => {
     const { userId } = req.body;
 
     try {
-        const games = await gameSchema.findAll({});
+        const games = await Game.findAll({});
         res.status(200).json({ games });
     } catch (error) {
         console.error('Error retrieving games:', error);

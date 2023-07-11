@@ -32,11 +32,12 @@ export const logIn = async (req, res) => {
             userName: userName
         }
     });
-    console.log(user.password, " ", password)
-    console.log(">>", await bcrypt.compare(password, user.password))
     if (!user || !(await bcrypt.compare(password, user.password))) {
         return res.status(400).json({message:"invalid credentials"});
     }
+    console.log(user.password, " ", password)
+    console.log(">>", await bcrypt.compare(password, user.password))
+    
     console.log("zzzzzzzzzzzz " ,user);
 
     const payload = {

@@ -1,49 +1,51 @@
-import { Model, DataTypes } from 'sequelize';
-import connection from '../db/dbConnections.js';
+'use strict';
 
-class Game extends Model {
-  static associate(models) {
-    // Define associations here
-  }
-}
-
-Game.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    roomId: DataTypes.STRING,
-    boardId: DataTypes.INTEGER,
-    createdBy: DataTypes.INTEGER,
-    color: DataTypes.STRING,
-    status: {
-      type: DataTypes.STRING,
-      defaultValue: "Pending",
-    },
-    lastTurn: {
-      type: DataTypes.INTEGER,
-      references: { model: 'users', key: 'id' },
-      defaultValue: null,
-    },
-    numberOfPlayers: DataTypes.INTEGER,
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('games', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      roomId: {
+        type: Sequelize.INTEGER,
+      },
+      boardId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'boards', key: 'id' }
+      },
+      createdBy: {
+        type: Sequelize.INTEGER,
+        references: { model: 'users', key: 'id' }
+      },
+      color: {
+        type: Sequelize.STRING,
+      },
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: "pending"
+      },
+      lastTurn: {
+        type: Sequelize.INTEGER,
+        defaultValue: null,
+        references:{model:'users',key:'id'}
+      },
+      numberOfPlayers: {
+        type: Sequelize.INTEGER,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+    });
   },
-  {
-    sequelize: connection,
-    modelName: 'Game',
-    tableName: 'games',
-  }
-);
 
-export default Game;
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('games');
+  },
+};

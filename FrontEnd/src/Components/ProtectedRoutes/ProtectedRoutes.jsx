@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom'
 
 export default function ProtectedRoutes(props) {
 
-    if (localStorage.getItem("userToken")) {
+    if (localStorage.getItem("token")) {
         return props.children
     } else {
         return < Navigate to="/login" />

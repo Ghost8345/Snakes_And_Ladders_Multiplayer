@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { logInUser } from "../Api/userApi";
 import { MDBBtn } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -23,12 +24,12 @@ import animationData from './snakes_and_ladders.json'
 
 
 export default function Login() {
-  const [username, setUsername] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -39,17 +40,25 @@ export default function Login() {
     navigate("/register");
   };
 
-  const handleLoginClick = () => {
-    console.log('Username:', username);
-    console.log('Password:', password);
-    navigate("/lobby");
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Logic for handling form submission (e.g., API call, validation, etc.)
-    console.log('Username:', username);
+    console.log('Username:', userName);
     console.log('Password:', password);
+
+    try{
+      const response = await logInUser({
+        userName,
+        password
+      })
+      const responseBody = await response.json()
+      console.log(responseBody)
+      localStorage.setItem('token', responseBody.token)
+      navigate("/game")
+    }
+    catch(error){
+      console.log(error.message)
+    }
   };
 
   return (
@@ -63,8 +72,8 @@ export default function Login() {
           <input
             type="text"
             id="username"
-            value={username}
-            onChange={handleUsernameChange}
+            value={userName}
+            onChange={handleUserNameChange}
           />
         </div>
         <div>
@@ -75,9 +84,8 @@ export default function Login() {
             value={password}
             onChange={handlePasswordChange}
           />
-        <h1>   </h1>
         </div>
-        <MDBBtn id="btn" class="btn bg-main text-white"  onClick={handleLoginClick}>Login</MDBBtn>
+        <button type="submit" id="btn" class="btn bg-main text-white">Login</button>
         <p>Or create a new account</p>
         <MDBBtn id="btn" class="btn bg-main text-white" onClick={handleRegisterClick}>Register</MDBBtn>
       </form>

@@ -21,9 +21,6 @@ module.exports = {
         references: { model: 'users', key: 'id' },
         onDelete:'CASCADE'
       },
-      color: {
-        type: Sequelize.STRING,
-      },
       status: {
         type: Sequelize.STRING,
         defaultValue: "Pending"

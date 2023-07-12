@@ -264,7 +264,14 @@ export const move = async (req, res) => {
       },
     }
   );
-
+  await Game.update(
+    { updatedAt: new Date() },
+    {
+      where: {
+        id: gameId,
+      },
+    }
+  );
   const movement =
     playerPostion !== newPosition
       ? "Move Successful"
@@ -274,6 +281,7 @@ export const move = async (req, res) => {
     status: movement,
     positions: positions,
     dice: dice,
+    date:new Date()
   });
 };
 

@@ -10,10 +10,12 @@ const User = connection.define('user', {
   },
   userName: {
     type: DataTypes.STRING(50),
-    unique:true
+    unique:true,
+    allowNull:false
   },
   password: {
     type: DataTypes.STRING(255),
+    allowNull:false
   }
 });
 

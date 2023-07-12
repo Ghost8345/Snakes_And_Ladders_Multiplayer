@@ -18,10 +18,7 @@ const Game = connection.define('game', {
     },
     createdBy:{
       type:DataTypes.INTEGER
-    } ,
-    color:{
-      type:DataTypes.STRING
-    } ,
+    }  ,
     status: {
       type:DataTypes.STRING
     },
@@ -29,7 +26,8 @@ const Game = connection.define('game', {
       type:DataTypes.INTEGER
     },
     numberOfPlayers:{
-      type:DataTypes.INTEGER
+      type:DataTypes.INTEGER,
+      allowNull:false
     } 
   });
   Game.belongsTo(User, {

@@ -71,3 +71,13 @@ body {
 .dice-6 {
   background-image: url('https://upload.wikimedia.org/wikipedia/commons/f/f4/Alea_6.png');
 }
+
+body {
+  background-color: #c1f6ef;
+  text-align: center;
+  font-family: 'Encode Sans Expanded', sans-serif;
+}
+
+#btn {
+  border-radius: 100px;
+}

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logInUser } from "../../Api/userApi";
-import { MDBBtn } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -67,17 +66,14 @@ export default function Login() {
 
   return (
 
-
     <>
-
-
       <section>
         <div className="container">
           <div className="row d-flex justify-content-center">
             <h1>Snake and Ladder Multiplayer Game</h1>
             <h2>Login</h2>
             <div className="col-md-4 p-4 bg-light">
-              <form onSubmit={handleSubmit} className="">
+              <form onSubmit={handleSubmit}>
                 <div className="d-flex justify-content-center mb-4">
                   <label htmlFor="username">Username:</label>
                   <input
@@ -100,9 +96,8 @@ export default function Login() {
                 </div>
                 <div className="d-flex justify-content-center mb-4">
                   <button type="submit" id="btn" class="btn bg-main " onClick={handleLoginClick}>Login</button>
-
                 </div>
-                <p>Or create a new account</p>
+                <p>Or create a new account?</p>
                 <button className="btn  bg-main" id="btn" onClick={handleRegisterClick}>Register</button>
               </form>
             </div>
@@ -110,14 +105,7 @@ export default function Login() {
         </div>
       </section>
       <div>
-
-
-        <div id="pages">
-
-        </div>
-
       </div>
     </>
-
   );
 }

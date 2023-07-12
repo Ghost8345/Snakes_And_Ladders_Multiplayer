@@ -9,6 +9,7 @@ export default function Layout() {
 
             {/* <Lottie animationData={animationData} /> */}
 
+            {localStorage.setItem("token", "ehab")}
             <Outlet />
         </>
     )

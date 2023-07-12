@@ -15,17 +15,17 @@ export default function Login() {
   };
 
   return (
-  <section id = "pages">
+    <section id="pages">
       <div>
         <h1>     </h1>
         <h2>Lobby</h2>
-          <form>
-        <div>
-        </div>
-        <button id="btn" class="btn bg-main text-white"  onClick={handleCreateGameClick}>Create Game</button>
-        <button id="btn" class="btn bg-main text-white"  onClick={handleJoinGameClick}>Join Game</button>
-      </form>
-    </div> 
-  </section>
+        <form>
+          <div>
+          </div>
+          <button id="btn" class="btn bg-main text-white" onClick={handleCreateGameClick}>Create Game</button>
+          <button id="btn" class="btn bg-main text-white" onClick={handleJoinGameClick}>Join Game</button>
+        </form>
+      </div>
+    </section>
   );
 }

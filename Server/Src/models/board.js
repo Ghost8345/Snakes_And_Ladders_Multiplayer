@@ -1,21 +1,20 @@
-'use strict';
-import { Model, DataTypes } from 'sequelize';
-import connection from '../db/dbConnections.js';
+"use strict";
+import { Model, DataTypes } from "sequelize";
+import connection from "../db/dbConnections.js";
 
-class Board extends Model {
-  static associate(models) {
-    // Define associations here
-  }
-}
-//
-Board.init(
+const Board = connection.define(
+  "board",
   {
-    imagePath: DataTypes.STRING,
-  },
-  {
-    sequelize: connection,
-    modelName: 'Board',
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    imagePath: {
+      type: DataTypes.STRING,
+    }
   }
 );
 
+connection.sync();
 export default Board;

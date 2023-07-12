@@ -9,7 +9,7 @@ export const createUser = async (req, res) => {
         console.log("IN HEREE")
         return res.status(400).json({message:"Username and/or password missing"});
     }
-
+    console.log(password)
     const encryptedPassword = await bcrypt.hash(password, 10);
     console.log(encryptedPassword);
     password = encryptedPassword

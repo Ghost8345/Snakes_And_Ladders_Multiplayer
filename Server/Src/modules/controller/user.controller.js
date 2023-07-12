@@ -12,7 +12,7 @@ export const createUser = async (req, res) => {
     console.log(encryptedPassword);
     password = encryptedPassword
     try {
-        await userSchema.create({ userName, password });
+        await User.create({ userName, password });
         res.status(200).json({message: "success"});
     } catch (error) {
         res.status(400).json({ message: "error " });

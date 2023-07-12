@@ -5,7 +5,7 @@ import { userRouter } from './modules/routes/user.routes.js';
 import { verifyToken } from './modules/middleware/auth.js';
 import { Server } from 'socket.io'
 import http from 'http';
-
+import cors from 'cors'
 
 const app = express() 
 const server = http.createServer(app);
@@ -16,6 +16,10 @@ const port = process.env.PORT || 4000;
 
 // Middleware
 app.use(express.json());
+
+app.use(cors({
+    exposedHeaders: '*'
+  }));
 
 app.use('/user',userRouter);
 app.use('/game',verifyToken,gameRouter);

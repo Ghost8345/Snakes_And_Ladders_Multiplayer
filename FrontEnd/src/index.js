@@ -16,7 +16,9 @@ socket.on('connect', () => {
     console.log('Disconnected from Socket.io server');
   });
 
-  
+  socket.on('update', (data)=>{
+    console.log("update the board with move:",data);
+  })
 export const joinRoom = (roomId) =>{
     console.log("emitting to ",roomId);
     socket.emit("joinRoom",roomId)

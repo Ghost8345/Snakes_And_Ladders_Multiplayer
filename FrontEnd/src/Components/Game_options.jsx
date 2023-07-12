@@ -12,6 +12,11 @@
 //       };
       
 //     const navigate = useNavigate();
+    // const handleExitClick = () => {
+    //     navigate("/Lobby");
+    //   };
+
+    // const navigate = useNavigate();
 
 //     return (
 //         <
@@ -27,3 +32,8 @@
 //     )
 // }
 
+//                 </div>
+//         </section>
+//         </>
+//     )
+// }

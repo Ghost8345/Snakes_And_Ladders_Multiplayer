@@ -4,6 +4,24 @@ import { logInUser } from "../Api/userApi";
 import { MDBBtn } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import Lottie from "lottie-react"
+import animationData from './snakes_and_ladders.json'
+
+
+// var canvas = document.querySelector('canvas');
+// var context = canvas.getContext('2d');
+// var centerX = canvas.width / 2;
+// var centerY = canvas.height / 2;
+// var radius = 30;
+// context.beginPath(),
+// context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false),
+// context.fillStyle = 'skyblue',
+// context.fill(),
+// context.lineWidth = 5,
+// context.strokeStyle = '#030',
+// context.stroke(),
+
+
 
 export default function Login() {
   const [userName, setUserName] = useState('');
@@ -44,6 +62,7 @@ export default function Login() {
   };
 
   return (
+    <div>
     <div id = "pages">
       <h1>Snake and Ladder Multiplayer Game</h1>
       <h2>Login</h2>
@@ -71,6 +90,9 @@ export default function Login() {
         <MDBBtn id="btn" class="btn bg-main text-white" onClick={handleRegisterClick}>Register</MDBBtn>
       </form>
     </div>
-
+    <div id = "animation">
+    <Lottie animationData = {animationData} />
+    </div>
+    </div>
   );
 }

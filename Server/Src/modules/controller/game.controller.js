@@ -79,7 +79,7 @@ export const createGame = async (req, res) => {
   let gameId = games.id;
   const color = colors[0];
 
-  await User.create({ userId, gameId, position, status, color });
+  await UserGame.create({ userId, gameId, position, status, color });
 
   // TODO : assign a unique string as game id and add it to the database. this string will be the room id
   const roomId = "room-" + boardId + "-" + createdBy;

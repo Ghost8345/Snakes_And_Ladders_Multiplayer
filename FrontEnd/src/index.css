@@ -20,6 +20,10 @@
   text-align: left;
 }
 
+#animation {
+  zoom: 10%
+}
+
 body {
   font-family: var(--font-family);
 }
@@ -31,4 +35,8 @@ body {
 .bg-main
 {
     background-color: var(--main-color);
+}
+
+#container {
+  padding:50px;
 }

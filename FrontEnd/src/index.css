@@ -8,7 +8,7 @@
 #home {
   height: 100vh;
 }
-
+ 
 .boardContainer {
   background-image: url('./Assets/EmptyBoardImage.png');
   background-position: center;

@@ -351,9 +351,30 @@ export const deleteGame = async (req, res) => {
   const row = await Game.findOne({
     where: { id: gameId },
   });
-
-  if (row) {
-    console.log(await row.destroy()); // deletes the row
-  }
+if(row.createdBy==userId && row.status=="Pending"){
+  await row.destroy()
+  console.log("deleted Successfully");
   res.status(200).json({ Message: " Game " + gameId + " is deleted" });
+}
+ else{
+  console.log("Cannot be deleted");
+  res.status(200).json({ Message: " Game " + gameId + " cannot be deleted" });
+ }
+  
+};
+
+export const getPlayerNames = async (req, res) => {
+  const { userId } = req.body;
+  const { gameId } = req.params;
+
+  const players = await UserGame.findAll({
+    where: {
+      gameId: gameId,
+    },
+    include: [{ model: User }]
+  }).then((all) => {
+    console.log(all+"all players ");
+  });
+  console.log(players+" ----all players ");
+   
 };

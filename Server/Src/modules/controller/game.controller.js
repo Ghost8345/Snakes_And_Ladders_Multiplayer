@@ -1,11 +1,9 @@
-
-import { io } from "../../index.js"
-let count = 0;
-
 import UserGame from "../../models/usergame.js";
 import Board from '../../models/board.js'
 import Game from '../../models/game.js';
 import Element from '../../models/element.js'
+import { io } from "../../index.js";
+
 
 const colors = [
   '#FF0000', // Red
@@ -19,24 +17,6 @@ const colors = [
   '#008080', // Teal
   '#A52A2A'  // Brown
 ]
-
-/*
-SOCKET 
-1/ connect on opening webpage
-2/ ask to create or join game
-    when creating games : - create new room id,
-                          - join player in socket room with that id
-                          - store it in db in game table,
-                          - store the user socket id in game user table
-    when joining games  : - get the room id from db
-                          - join player in socket room with that id
-                          - store the user socket id in game user table
-3/ on playing: in player turn he sends a request to the back for the move
-   when the move is over, we emit to that room a json {type: 'update'|'disconnect'|'notifyleave'|'gameover' , response: ''}
-
-
-*/
-
 
 
 export const getAllGames = async (req, res) => {
@@ -78,28 +58,21 @@ export const createGame = async (req, res) => {
   const createdBy = userId
 
 
-  const games = await Game.create({ boardId, createdBy, status, lastTurn, numberOfPlayers });
+  const date1 = new Date('January 1, 2020');
+  const timestamp1 = date1.getTime();
+  const timestamp2 = Date.now()
+
+  const timestamp = timestamp2 - timestamp1
+  const roomIdbase = "room-" + timestamp + "-" + createdBy
+  const roomId = btoa(roomIdbase);
+
+  const games = await Game.create({ roomId,boardId, createdBy, status, lastTurn, numberOfPlayers });
   status = "active"
   let position = 0;
   let gameId = games.id;
   const color = colors[0]
 
-  await userG.create({ userId, gameId, position, status, color });
-
-  const date1 = new Date('January 1, 2020');
-  const timestamp1 = date1.getTime();
-  const date2 = new Date.now()
-  const timestamp2 = date2.getTime()
-
-  const timestamp = timestamp2 - timestamp1
-  const roomId = "room-" + timestamp + "-" + gameId + "-" + createdBy
-  const encodedRoomID = btoa(roomId);
-
-
-  io.on('connection', (socket) => {
-    socket.join(encodedRoomID);
-    console.log("connected inside of create game response")
-  });
+  await UserGame.create({ userId, gameId, position, status, color });
   res.status(200).json({ games, board });
 };
 
@@ -154,19 +127,19 @@ export const joinGame = async (req, res) => {
 
     // fire event for the rest of the room that player joined
     const roomId = gameFound.roomId
-    io.on('connection', (socket) => {
-      socket.join(roomId);
-    });
-
-    io.to(roomId).emit('playerjoined',{message:'last user joined', players:players })
-
-    return res.status(200).json({ message: "success", players: players })
+    io.to(roomId).emit('playerjoined',{message:'user joined', players:players, games:gameFound })
+    return res.status(200).json({message:'user joined', players:players,games:gameFound })
   } else { // general case
     const color = colors[playersJoined.length]
+    const roomId = gameFound.roomId
+    const players = playersJoined.map((player) => {
+      return player.userId
+    })
 
+    players.push(userId)
     await UserGame.create({ userId, gameId, position, status, color });
-    io.to(roomId).emit('playerjoined',{message:'user joined', players:players })
-    return res.status(200).json({ message: "success" })
+    io.to(roomId).emit('playerjoined',{message:'user joined', players:players, games:gameFound })
+    return res.status(200).json({message:'user joined', players:players,games:gameFound })
   }
 
 };

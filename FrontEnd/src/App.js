@@ -64,24 +64,24 @@ export default function App() {
     <div>
 
     
-    <ScrollView>
+    {/* <ScrollView>
       <View styles = {styles.container}>
         <View style = {styles.shapecontaniner}
 
 
 
       </View>
-      </ScrollView>
+      </ScrollView> */}
   
     <RouterProvider router={routers}></RouterProvider>
     </div>
   );
 }
 
-const styles = StyleSheet.create({
+{/* const styles = StyleSheet.create({
   container:{
     flex:1,
     alignItems:'center',
     justifyContent:'center',
   }
-})
+}) */}

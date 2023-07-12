@@ -3,7 +3,7 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Game from "./Components/Game";
 import Lobby2 from "./Components/Lobby2";
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, ScrollView, StyleSheet, View } from 'react-router-dom';
 import './index.css';
 import "./App.css";
 import Lobby from "./Components/Lobby";
@@ -11,6 +11,7 @@ import Layout from "./Components/Layout/Layout";
 import ProtectedRoutes from "./Components/ProtectedRoutes/ProtectedRoutes";
 import GameBoard from "./Components/Dice/Dice";
 import Test from "./Components/Dice/Test";
+
 
 
 const routers = createBrowserRouter([
@@ -64,8 +65,27 @@ const routers = createBrowserRouter([
 ])
 export default function App() {
   return (
+    <div>
 
+    
+    {/* <ScrollView>
+      <View styles = {styles.container}>
+        <View style = {styles.shapecontaniner}
+
+
+
+      </View>
+      </ScrollView> */}
+  
     <RouterProvider router={routers}></RouterProvider>
-
+    </div>
   );
 }
+
+{/* const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+  }
+}) */}

@@ -8,7 +8,7 @@ export default function Login() {
         <>
             <section id="home">
                 <div className="boardContainer">
-        
+
                 </div>
             </section>
         </>

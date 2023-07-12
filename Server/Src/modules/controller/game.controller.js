@@ -281,8 +281,7 @@ export const move = async (req, res) => {
   return res.status(200).json({
     status: movement,
     positions: positions,
-    dice: dice,
-    date:new Date()
+    dice: dice
   });
 };
 
@@ -344,16 +343,23 @@ export const leaveGame = async (req, res) => {
   if (row) {
     console.log(await row.destroy()); // deletes the row
   }
-  res.status(200).json({ Message: player.userName + " Left" });
+  return res.status(200).json({ Message: player.userName + " Left" });
 };
 export const deleteGame = async (req, res) => {
   const { userId, gameId } = req.body;
-  const row = await Game.findOne({
+  const game = await Game.findOne({
     where: { id: gameId },
   });
 if(row.createdBy==userId && row.status=="Pending"){
   await row.destroy()
   console.log("deleted Successfully");
+
+  if(!game){
+    return res.status(400).json({ message: "Game Not Found" });
+  }
+
+  console.log(await game.destroy()); // deletes the row
+
   res.status(200).json({ Message: " Game " + gameId + " is deleted" });
 }
  else{
@@ -365,15 +371,14 @@ if(row.createdBy==userId && row.status=="Pending"){
 
 export const getPlayerNames = async (req, res) => {
   const { userId } = req.body;
-  const { gameId } = req.params;
+  const { gameId } = req.body;
 
   const players = await UserGame.findAll({
-    where: {
+     include: User,
+     where: {
       gameId: gameId,
     },
-    include: [{ model: User }]
-  }).then((all) => {
-    console.log(all+"all players ");
+   
   });
   console.log(players+" ----all players ");
    

@@ -6,7 +6,7 @@
   <script>
     const socket = io('http://localhost:4000'); // Connect to the server
     let room = "";
-
+    let roomId = ''
     socket.on('message', (data) => {
       console.log('Received message:', data);
     });
@@ -22,38 +22,34 @@
     }
 
     function joinRoom() {
-      let message = document.getElementById('room').value;
-      room = message;
-      socket.emit('joinRoom', message);
+      console.log("emitting to ",roomId);
+      socket.emit("joinRoom",roomId)
     }
+
+    socket.on('playerjoined', ()=>{
+      // refresh waiting list using api
+      console.log("New player joined, refresh all pending players");
+    })
+
 
     socket.on('update', (data) => {
-      console.log('update board socket msg:', data);
-      updateBoard()
+      // call update board api
+      console.log(data);
     });
 
-    socket.on('kick_inactive', ()=>{
-      leaveGame()
+    socket.on('kickinactive', ()=>{
+      // call leave api
     })
-    function updateBoard() {
-      
-    }
 
-    function leaveGame(){
-
-    }
     function createGame() {
       const url = 'http://localhost:4000/game/createGame';
       const body = {
         boardId: '1',
-        createdBy: '1',
-        status: 'ACTIVE',
-        lastTurn: 1,
         numberOfPlayers: 4
       };
       const headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Im1vbW8yIiwicGFzc3dvcmQiOiIkMmEkMTAkYmVmUnpiTE9QNkp0dXpmdUE2TS4zLmpIQnFXYlFqakdhQ2dCM0RjTjdnRWU0ZnRsYWFobUsiLCJpYXQiOjE2ODg5NzkyODh9.v8Jjz6c21eF7t30xPlHCeokm32uaecv-jZLQ6o-Wl50'
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Im1vbW8zIiwicGFzc3dvcmQiOiIkMmEkMTAkdFVHZ0FWMjZVZThIUktqRmRYM1NVZVdNOWY2dUJjbkouR0tLd2hQRmJBem1iWTRZZElVcHEiLCJ1c2VySWQiOjMsImlhdCI6MTY4OTA2Mzk5OH0.mHJQxUhvrMa5YoBmwIE0y6Ola7lOvsGcj-hpQV_KlGw'
       };
 
       fetch(url, {
@@ -64,8 +60,35 @@
         .then(response => response.json())
         .then(data => {
           console.log('Game created:', data);
-          // Connect to the Socket.IO server after creating the game
-          socket.connect();
+          // socket.emit(data.games.roomId,"hey")
+          roomId = data.games.roomId
+          joinRoom(data.games.roomId)
+
+        })
+        .catch(error => {
+          console.error('Error creating game:', error);
+        });
+    }
+
+
+    function joinGame() {
+      const url = 'http://localhost:4000/game/joinGame';
+      const body = {
+        "gameId": 25
+      } 
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Im1vbW8zIiwicGFzc3dvcmQiOiIkMmEkMTAkdFVHZ0FWMjZVZThIUktqRmRYM1NVZVdNOWY2dUJjbkouR0tLd2hQRmJBem1iWTRZZElVcHEiLCJ1c2VySWQiOjMsImlhdCI6MTY4OTA2Mzk5OH0.mHJQxUhvrMa5YoBmwIE0y6Ola7lOvsGcj-hpQV_KlGw'
+      };
+
+      fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(body)
+      })
+        .then(response => response.json())
+        .then(data => {
+          joinRoom(data.games.roomId)
         })
         .catch(error => {
           console.error('Error creating game:', error);
@@ -74,11 +97,11 @@
   </script>
 </head>
 <body>
-  <input type="text" id="message" placeholder="Enter a message">
+  <!-- <input type="text" id="message" placeholder="Enter a message">
   <button onclick="sendMessage()">Send</button>
 
-  <input type="text" id="room" placeholder="Join Room">
-  <button onclick="joinRoom()">Join</button>
+  <input type="text" id="room" placeholder="Join Room"> -->
+  <button onclick="joinGame()">Join</button>
 
   <button onclick="createGame()">Create Game</button>
 </body>

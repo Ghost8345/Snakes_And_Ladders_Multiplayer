@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&display=swap');
+
+:root
+{
+    --main-color:#ffa2a2;
+    --font-family:'Encode Sans Expanded', sans-serif;
+}
+
+#home {
+  height: 100vh;
+}
+
+.boardContainer {
+  background-image: url('./Assets/EmptyBoardImage.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:contain;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+}
+
+body {
+  font-family: var(--font-family);
+}
+
+#pages{
+    zoom: 2;
+}
+
+.bg-main
+{
+    background-color: var(--main-color);
+}

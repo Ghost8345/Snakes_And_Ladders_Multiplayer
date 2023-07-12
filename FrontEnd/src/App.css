@@ -1,0 +1,9 @@
+body{
+  background-color: #d4f6ff;
+  text-align: center;
+  font-family:'Encode Sans Expanded', sans-serif;
+}
+
+#btn{
+    border-radius: 100px;
+}

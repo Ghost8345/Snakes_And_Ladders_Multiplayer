@@ -5,6 +5,8 @@ import Board from "../../models/board.js";
 import Game from "../../models/game.js";
 import Element from "../../models/element.js";
 import User from "../../models/user.js";
+import {QueryTypes} from "sequelize";
+
 
 const colors = [
   "#FF0000", // Red
@@ -356,4 +358,29 @@ export const deleteGame = async (req, res) => {
   console.log(await game.destroy()); // deletes the row
 
   res.status(200).json({ Message: " Game " + gameId + " is deleted" });
+};
+
+export const getPlayersNames = async (req, res) => {
+  const { userId, gameId } = req.body;
+
+  const players = await UserGame.findAll({
+    include: User,
+    where: {gameId: gameId}
+  })
+
+  if(!players){
+    return res.status(400).json({ message: "ERR" });
+  }
+
+  console.log(players)
+
+  const playerNames = players.map((player) => {
+    return player.user.userName
+  })
+
+  console.log(playerNames)
+
+  return res.status(200).json(playerNames)
+  
+
 };

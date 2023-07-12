@@ -5,12 +5,10 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Login() {
 
-    
-
     const handleExitClick = () => {
         navigate("/Lobby");
       };
-      
+
     const navigate = useNavigate();
 
     return (
@@ -26,4 +24,3 @@ export default function Login() {
         </>
     )
 }
-

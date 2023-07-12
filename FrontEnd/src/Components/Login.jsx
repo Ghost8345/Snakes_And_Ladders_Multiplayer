@@ -6,6 +6,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Lottie from "lottie-react"
 import animationData from './snakes_and_ladders.json'
 
+
 // var canvas = document.querySelector('canvas');
 // var context = canvas.getContext('2d');
 // var centerX = canvas.width / 2;
@@ -82,7 +83,7 @@ export default function Login() {
       </form>
     </div>
     <div id = "animation">
-      <Lottie animationData = {animationData} />
+    <Lottie animationData = {animationData} />
     </div>
     </div>
   );

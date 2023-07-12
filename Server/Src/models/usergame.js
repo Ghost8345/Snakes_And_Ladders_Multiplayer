@@ -30,11 +30,13 @@ const UserGame = connection.define('usergame', {
 UserGame.belongsTo(User, {
   foreignKey: 'userId',
   targetKey: 'id',
+  onDelete:'CASCADE'
 });
 
 UserGame.belongsTo(Game, {
   foreignKey: 'gameId',
   targetKey: 'id',
+  onDelete:'CASCADE'
 });
 
 connection.sync();

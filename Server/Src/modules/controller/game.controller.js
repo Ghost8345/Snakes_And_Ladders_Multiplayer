@@ -1,22 +1,23 @@
-import UserGame from "../../models/usergame.js";
-import Board from '../../models/board.js'
-import Game from '../../models/game.js';
-import Element from '../../models/element.js'
-import { io } from "../../index.js";
 
+import { io } from "../../index.js"
+import UserGame from "../../models/usergame.js";
+import Board from "../../models/board.js";
+import Game from "../../models/game.js";
+import Element from "../../models/element.js";
+import User from "../../models/user.js";
 
 const colors = [
-  '#FF0000', // Red
-  '#0000FF', // Blue
-  '#00FF00', // Green
-  '#FFFF00', // Yellow
-  '#FFA500', // Orange
-  '#800080', // Purple
-  '#FFC0CB', // Pink
-  '#808080', // Gray
-  '#008080', // Teal
-  '#A52A2A'  // Brown
-]
+  "#FF0000", // Red
+  "#0000FF", // Blue
+  "#00FF00", // Green
+  "#FFFF00", // Yellow
+  "#FFA500", // Orange
+  "#800080", // Purple
+  "#FFC0CB", // Pink
+  "#808080", // Gray
+  "#008080", // Teal
+  "#A52A2A", // Brown
+];
 
 
 export const getAllGames = async (req, res) => {
@@ -25,38 +26,31 @@ export const getAllGames = async (req, res) => {
   try {
     const games = await Game.findAll({
       where: {
-        status: "pending"
-      }
+        status: "pending",
+      },
     });
     res.status(200).json({ games });
   } catch (error) {
-    console.error('Error retrieving games:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error retrieving games:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-}
-
-
-
-
-
+};
 
 export const createGame = async (req, res) => {
   const { boardId, numberOfPlayers, userId } = req.body;
-  let status = "pending"
-  let lastTurn = null
+  let status = "pending";
+  let lastTurn = null;
   const board = await Board.findOne({
     where: {
-      id: boardId
-
-    }
+      id: boardId,
+    },
   });
 
   if (!board) {
-    return res.status(400).json({ Message: "Board is not found " })
+    return res.status(400).json({ message: "Board is not found " })
   }
 
-  const createdBy = userId
-
+  const createdBy = userId;
 
   const date1 = new Date('January 1, 2020');
   const timestamp1 = date1.getTime();
@@ -68,16 +62,14 @@ export const createGame = async (req, res) => {
 
   const games = await Game.create({ roomId,boardId, createdBy, status, lastTurn, numberOfPlayers });
   status = "active"
+
   let position = 0;
   let gameId = games.id;
-  const color = colors[0]
+  const color = colors[0];
 
   await UserGame.create({ userId, gameId, position, status, color });
   res.status(200).json({ games, board });
 };
-
-
-
 
 export const joinGame = async (req, res) => {
   let { userId, gameId } = req.body;
@@ -90,7 +82,6 @@ export const joinGame = async (req, res) => {
     },
   });
 
-
   if (!gameFound) {
     return res.status(400).json({ message: "Game Not Found" });
   }
@@ -102,12 +93,19 @@ export const joinGame = async (req, res) => {
     },
   });
 
-  console.log("Max Number of Players for this Game: ", gameFound.numberOfPlayers);
-  if (playersJoined.length == gameFound.numberOfPlayers) { // if game full
-    return res.status(400).json({ message: "Game has reached the number of players required" });
-  } else if (playersJoined.length == gameFound.numberOfPlayers - 1) {  //last player
-    const color = colors[playersJoined.length]
+  const playerFound = playersJoined.find(player => player.userId === userId)
+  if (playerFound){
+    return res.status(400).json({message:"User Already Joined"});
+  }
 
+  console.log("Max Number of Players for this Game: ", gameFound.numberOfPlayers);
+
+  if (playersJoined.length == gameFound.numberOfPlayers) {
+    return res
+      .status(400)
+      .json({ message: "Game has reached the number of players required" });
+  } else if (playersJoined.length == gameFound.numberOfPlayers - 1) {
+    const color = colors[playersJoined.length];
     await UserGame.create({ userId, gameId, position, status, color });
     await Game.update(
       { status: "Started" },
@@ -118,12 +116,12 @@ export const joinGame = async (req, res) => {
       }
     );
     const players = playersJoined.map((player) => {
-      return player.userId
-    })
+      return player.userId;
+    });
 
-    players.push(userId)
+    players.push(userId);
 
-    console.log(players)
+    console.log(players);
 
     // fire event for the rest of the room that player joined
     const roomId = gameFound.roomId
@@ -136,25 +134,18 @@ export const joinGame = async (req, res) => {
       return player.userId
     })
 
+
     players.push(userId)
     await UserGame.create({ userId, gameId, position, status, color });
     io.to(roomId).emit('playerjoined',{message:'user joined', players:players, games:gameFound })
     return res.status(200).json({message:'user joined', players:players,games:gameFound })
+
   }
-
 };
-
-
-
-
-
-
-
-
-
 
 export const move = async (req, res) => {
   const { userId, gameId } = req.body;
+  console.log("userID: ", userId, "gameId : " , gameId)
 
   const game = await Game.findOne({
     where: {
@@ -180,64 +171,63 @@ export const move = async (req, res) => {
 
   const elements = await Element.findAll({
     where: {
-      boardId: game.boardId
-    }
-  })
+      boardId: game.boardId,
+    },
+  });
 
-
-  console.log(elements)
-
+  console.log(elements);
 
   const playerIds = playersList.map((player) => {
-    return player.userId
-  })
+    return player.userId;
+  });
 
-  console.log("Player Id List: ", playersList)
+  console.log("Player Id List: ", playersList);
 
 
-
-  if (!playerIds.includes(userId)) { // imposter case
-    return res.status(400).json({ message: "Player Not in Players List" })
+  if (!playerIds.includes(userId)) {
+    return res.status(400).json({ message: "Player Not in Players List" });
   }
 
-
   const lastTurn = game.lastTurn;
-  const indexOfLastPlayer = playerIds.indexOf(lastTurn)
-  const indexOfCurrentPlayer = (indexOfLastPlayer + 1) % game.numberOfPlayers
-
+  const indexOfLastPlayer = playerIds.indexOf(lastTurn);
+  const indexOfCurrentPlayer = (indexOfLastPlayer + 1) % playersList.length;
 
   if (!lastTurn) { // the first player turn 
     if (playerIds[0] != userId) {
-      return res.status(400).json({ message: "Wrong Turn" })
+
+      return res.status(400).json({ message: "Wrong Turn" });
     }
-  }
-  else { 
+  } else {
     if (playerIds[indexOfCurrentPlayer] != userId) {
-      return res.status(400).json({ message: "Wrong Turn" })
+      return res.status(400).json({ message: "Wrong Turn" });
     }
   }
 
-  const dice = rollDice()
-  console.log(dice)
+  const dice = rollDice();
+  console.log(dice);
 
-  const playerPostion = playersList.find(player => player.userId === userId).position
-  console.log(playerPostion)
+  const playerPostion = playersList.find(
+    (player) => player.userId === userId
+  ).position;
+  console.log(playerPostion);
 
-  let positions = []
-  positions.push(playerPostion)
+  let positions = [];
+  positions.push(playerPostion);
   let newPosition = playerPostion + dice;
-  positions.push(newPosition)
-  const elementAtNewPosition = elements.find(element => element.goFrom === (newPosition))
+  positions.push(newPosition);
+  const elementAtNewPosition = elements.find(
+    (element) => element.goFrom === newPosition
+  );
 
   if (elementAtNewPosition) {
-    newPosition = elementAtNewPosition.goTo
-    positions.push(newPosition)
+    newPosition = elementAtNewPosition.goTo;
+    positions.push(newPosition);
   }
-  console.log(newPosition)
+  console.log(newPosition);
 
   if (newPosition > 100) {
-    newPosition = playerPostion
-    positions = [newPosition]
+    newPosition = playerPostion;
+    positions = [newPosition];
   }
 
   if (newPosition === 100) {
@@ -248,12 +238,12 @@ export const move = async (req, res) => {
           id: gameId,
         },
       }
-    )
+    );
   }
 
 
-  const userGameId = playersList.find(player => player.userId === userId).id
-  console.log(userGameId)
+  const userGameId = playersList.find((player) => player.userId === userId).id;
+  console.log(userGameId);
 
   await UserGame.update(
     { status: "active", position: newPosition },
@@ -282,16 +272,12 @@ export const move = async (req, res) => {
     dice: dice
   })
 
-
   return res.status(200).json({
     status: movement,
     positions: positions,
     dice: dice
-  })
+  });
 };
-
-
-
 
 
 
@@ -300,11 +286,10 @@ const rollDice = () => { return Math.floor(Math.random() * (6)) + 1 }
 
 
 
+
 export const updateBoard = async (req, res) => {
-
   const { userId } = req.body;
-  const { gameId } = req.params
-
+  const { gameId } = req.params;
 
   const game = await Game.findOne({
     where: {
@@ -313,7 +298,6 @@ export const updateBoard = async (req, res) => {
   });
 
   if (!game) {
-
     return res.status(400).json({ message: "Game Not Found" });
   }
 
@@ -323,27 +307,53 @@ export const updateBoard = async (req, res) => {
     },
   });
 
-  const player = players.find(player => player.userId == userId)
-  console.log("Player: ", player)
+  const player = players.find((player) => player.userId == userId);
+  console.log("Player: ", player);
 
   if (!player) {
-
     return res.status(400).json({ message: "Player not found in game" });
   }
 
   const board = await Board.findOne({
     where: {
-      id: game.boardId
-    }
-  })
+      id: game.boardId,
+    },
+  });
 
   const elements = await Element.findAll({
     where: {
-      boardId: game.boardId
-    }
-  })
+      boardId: game.boardId,
+    },
+  });
 
+  return res
+    .status(200)
+    .json({ message: "success", players, elements, game, board });
+};
+export const leaveGame = async (req, res) => {
+  const { userId, gameId } = req.body;
+  const row = await UserGame.findOne({
+    where: { userId: userId, gameId: gameId },
+  });
+  const player = await User.findOne({
+    where: { id: userId },
+  });
+  if (row) {
+    console.log(await row.destroy()); // deletes the row
+  }
+  return res.status(200).json({ Message: player.userName + " Left" });
+};
+export const deleteGame = async (req, res) => {
+  const { userId, gameId } = req.body;
+  const game = await Game.findOne({
+    where: { id: gameId },
+  });
 
-  return res.status(200).json({ message: "success", players, elements, game, board })
+  if(!game){
+    return res.status(400).json({ message: "Game Not Found" });
+  }
 
+  console.log(await game.destroy()); // deletes the row
+
+  res.status(200).json({ Message: " Game " + gameId + " is deleted" });
 };

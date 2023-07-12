@@ -68,7 +68,7 @@ export const createGame = async (req, res) => {
   const color = colors[0];
 
   await UserGame.create({ userId, gameId, position, status, color });
-  res.status(200).json({ games, board });
+  res.status(200).json({ game:games, board });
 };
 
 export const joinGame = async (req, res) => {
@@ -125,8 +125,8 @@ export const joinGame = async (req, res) => {
 
     // fire event for the rest of the room that player joined
     const roomId = gameFound.roomId
-    io.to(roomId).emit('playerjoined',{message:'user joined', players:players, games:gameFound })
-    return res.status(200).json({message:'user joined', players:players,games:gameFound })
+    io.to(roomId).emit('playerjoined',{message:'user joined', players:players, game:gameFound })
+    return res.status(200).json({message:'user joined', players:players,game:gameFound })
   } else { // general case
     const color = colors[playersJoined.length]
     const roomId = gameFound.roomId
@@ -137,8 +137,8 @@ export const joinGame = async (req, res) => {
 
     players.push(userId)
     await UserGame.create({ userId, gameId, position, status, color });
-    io.to(roomId).emit('playerjoined',{message:'user joined', players:players, games:gameFound })
-    return res.status(200).json({message:'user joined', players:players,games:gameFound })
+    io.to(roomId).emit('playerjoined',{message:'user joined', players:players, game:gameFound })
+    return res.status(200).json({message:'user joined', players:players,game:gameFound })
 
   }
 };

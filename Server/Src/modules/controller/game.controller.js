@@ -81,7 +81,7 @@ export const createGame = async (req, res) => {
   let gameId = games.id;
   const color = colors[0];
 
-  await User.create({ userId, gameId, position, status, color });
+  await UserGame.create({ userId, gameId, position, status, color });
 
   // TODO : assign a unique string as game id and add it to the database. this string will be the room id
   const roomId = "room-" + boardId + "-" + createdBy;
@@ -194,7 +194,7 @@ export const move = async (req, res) => {
 
   const lastTurn = game.lastTurn;
   const indexOfLastPlayer = playerIds.indexOf(lastTurn);
-  const indexOfCurrentPlayer = (indexOfLastPlayer + 1) % game.numberOfPlayers;
+  const indexOfCurrentPlayer = (indexOfLastPlayer + 1) % playersList.length;
 
   if (!lastTurn) {
     if (playerIds[0] != userId) {
@@ -264,7 +264,14 @@ export const move = async (req, res) => {
       },
     }
   );
-
+  await Game.update(
+    { updatedAt: new Date() },
+    {
+      where: {
+        id: gameId,
+      },
+    }
+  );
   const movement =
     playerPostion !== newPosition
       ? "Move Successful"
@@ -274,6 +281,7 @@ export const move = async (req, res) => {
     status: movement,
     positions: positions,
     dice: dice,
+    date:new Date()
   });
 };
 

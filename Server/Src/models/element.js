@@ -1,23 +1,29 @@
 'use strict';
 import { Model, DataTypes } from 'sequelize';
 import connection from '../db/dbConnections.js';
+import Board from '../models/board.js';
 
-class Element extends Model {
-  static associate(models) {
-    // Define associations here
-  }
-}
-
-Element.init(
-  {
-    goFrom: DataTypes.INTEGER,
-    goTo: DataTypes.INTEGER,
-    boardId: DataTypes.INTEGER,
+const Element = connection.define('element', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
   },
-  {
-    sequelize: connection,
-    modelName: 'Element',
-  }
-);
-
+  goFrom: {
+      type:DataTypes.INTEGER
+    },
+    goTo: {
+      type:DataTypes.INTEGER
+    },
+    boardId: {
+      type:DataTypes.INTEGER
+    }
+  });
+  Element.belongsTo(Board, {
+    foreignKey: 'boardId',
+    targetKey: 'id',
+    onDelete:'CASCADE'
+  });
+  connection.sync();
+  
 export default Element;

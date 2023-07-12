@@ -112,8 +112,8 @@ export const joinGame = async (req, res) => {
   });
 
   const playerFound = playersJoined.find(player => player.userId === userId)
-  if (playerFound){
-    return res.status(400).json({message:"User Already Joined"});
+  if (playerFound) {
+    return res.status(400).json({ message: "User Already Joined" });
   }
 
   console.log("Max Number of Players for this Game: ", gameFound.numberOfPlayers);
@@ -153,7 +153,7 @@ export const joinGame = async (req, res) => {
 
 export const move = async (req, res) => {
   const { userId, gameId } = req.body;
-  console.log("userID: ", userId, "gameId : " , gameId)
+  console.log("userID: ", userId, "gameId : ", gameId)
 
   const game = await Game.findOne({
     where: {
@@ -282,7 +282,7 @@ export const move = async (req, res) => {
     status: movement,
     positions: positions,
     dice: dice,
-    date:new Date()
+    date: new Date()
   });
 };
 

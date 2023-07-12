@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { registerUser } from "../Api/userApi";
+import { registerUser } from "../../Api/userApi";
 
 
 export default function Register() {
@@ -27,7 +27,7 @@ export default function Register() {
     // Logic for handling form submission (e.g., API call, validation, etc.)
     console.log('Username:', userName);
     console.log('Password:', password);
-    try{
+    try {
       const response = await registerUser({
         userName,
         password
@@ -35,7 +35,7 @@ export default function Register() {
       const message = await response.json()
       console.log(message)
     }
-    catch(error){
+    catch (error) {
       console.log(error.message)
     }
 

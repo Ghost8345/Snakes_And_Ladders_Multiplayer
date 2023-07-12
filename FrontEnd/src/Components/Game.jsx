@@ -1,12 +1,14 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { createGame, JoinGame, move} from "../Api/gameApi";
+import { createGame, JoinGame, move, getPendingGames, updateBoard} from "../Api/gameApi";
 
 export default function Game() {
     const [boardId, setBoardId] = useState();
     const [numberOfPlayers, setNumberOfPlayers] = useState();
     const [gameIdJ, setgameIdJ] = useState();
     const [gameIdM, setgameIdM] = useState();
+    const [gameIdU, setgameIdU] = useState();
+
 
     const navigate = useNavigate();
 
@@ -25,6 +27,10 @@ export default function Game() {
 
       const handleGameIdMChange = (e) => {
         setgameIdM(e.target.value);
+      };
+
+      const handleGameIdUChange = (e) => {
+        setgameIdU(e.target.value);
       };
       const handleLogoutClick = (e) => {
         localStorage.removeItem('token')
@@ -89,6 +95,37 @@ export default function Game() {
         }
       };
 
+      const handleGetGamesSubmit = async (e) => {
+        e.preventDefault();
+        // Logic for handling form submission (e.g., API call, validation, etc.)
+
+        try{
+          const response = await getPendingGames()
+          const responseBody = await response.json()
+          console.log(responseBody)
+        }
+        catch(error){
+          console.log(error.message)
+        }
+      };
+
+      const handleupdateBoardSubmit = async (e) => {
+        e.preventDefault();
+        // Logic for handling form submission (e.g., API call, validation, etc.)
+        console.log('gameId:', gameIdU);
+
+        const gameId = gameIdU
+
+        try{
+          const response = await updateBoard(gameId)
+          const responseBody = await response.json()
+          console.log(responseBody)
+        }
+        catch(error){
+          console.log(error.message)
+        }
+      };
+
     return (
         
         <section id="home">
@@ -138,9 +175,27 @@ export default function Game() {
                 </form>
             </div>
 
-            <div>
-                <button type = "button" onClick={handleLogoutClick}>Logout</button>
+            <div id="getGames">
+                <form onSubmit={handleGetGamesSubmit}>
+                    <button type="submit">GetGames</button>
+                </form>
             </div>
+
+            <div id="updateBoard">
+                <form onSubmit={handleupdateBoardSubmit}>
+                  <label htmlFor="gameId">gameId:</label>
+                    <input
+                    type="text"
+                    id="gameId"
+                    value={gameIdU}
+                    onChange={handleGameIdUChange}
+                    />
+                    <button type="submit">updateBoard</button>
+                </form>
+            </div>
+
+              <button type = "button" onClick={handleLogoutClick}>Logout</button>
+            
         </section>
 
     )

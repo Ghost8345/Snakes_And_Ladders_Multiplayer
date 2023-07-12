@@ -27,6 +27,21 @@
       socket.emit('joinRoom', message);
     }
 
+    socket.on('update', (data) => {
+      console.log('update board socket msg:', data);
+      updateBoard()
+    });
+
+    socket.on('kick_inactive', ()=>{
+      leaveGame()
+    })
+    function updateBoard() {
+      
+    }
+
+    function leaveGame(){
+
+    }
     function createGame() {
       const url = 'http://localhost:4000/game/createGame';
       const body = {

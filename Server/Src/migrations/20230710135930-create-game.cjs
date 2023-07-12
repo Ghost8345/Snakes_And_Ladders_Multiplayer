@@ -6,38 +6,49 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
       roomId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING,
       },
       boardId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: { model: 'boards', key: 'id' }
+
       },
       createdBy: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references:{model: 'users', key: 'id' }
+
+      },
+      color: {
+        type: Sequelize.STRING,
       },
       status: {
-        type: Sequelize.STRING(255)
+        type: Sequelize.STRING,
+        defaultValue: "Pending"
       },
       lastTurn: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: null,
+        references: { model: 'users', key: 'id' }
+
       },
       numberOfPlayers: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('games');
-  }
+  },
 };

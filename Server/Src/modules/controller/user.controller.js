@@ -1,7 +1,7 @@
-import { userSchema } from "../../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { secret } from "../../../config.js";
+import User from "../../models/user.js";
 export const createUser = async (req, res) => {
     let { userName, password } = req.body;
     console.log(userName, password)
@@ -14,11 +14,10 @@ export const createUser = async (req, res) => {
     console.log(encryptedPassword);
     password = encryptedPassword
     try {
-        await userSchema.create({ userName, password });
-        return res.status(200).json({message: "success"});
+        await User.create({ userName, password });
+        res.status(200).json({message: "success"});
     } catch (error) {
-        console.log(error, "----------");
-        return res.status(400).json({ message: "error " });
+        res.status(400).json({ message: "error " });
     }
 };
 
@@ -29,7 +28,7 @@ export const logIn = async (req, res) => {
     }
     console.log(req.body);
 
-    const user = await userSchema.findOne({
+    const user = await User.findOne({
         where: {
             userName: userName
         }
@@ -38,10 +37,6 @@ export const logIn = async (req, res) => {
         console.log("In Invalid Credentials")
         return res.status(400).json({message:"invalid credentials"});
     }
-    console.log(user.password, " ", password)
-    console.log(">>", await bcrypt.compare(password, user.password))
-    
-    console.log("zzzzzzzz```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````zzzz " ,user);
 
     const payload = {
         userName: userName,

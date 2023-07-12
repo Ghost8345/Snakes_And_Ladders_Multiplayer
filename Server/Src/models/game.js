@@ -1,32 +1,55 @@
-import { Model, DataTypes } from 'sequelize';
+
+'use strict';
+import { DataTypes } from 'sequelize';
 import connection from '../db/dbConnections.js';
-
-class Game extends Model {
-  static associate(models) {
-    // Define associations here
-  }
-}
-
-Game.init(
-  {
+import User from '../models/user.js';
+import Board from '../models/board.js';
+const Game = connection.define('game', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    roomId: DataTypes.STRING,
-    boardId: DataTypes.INTEGER,
-    createdBy: DataTypes.INTEGER,
-    color: DataTypes.STRING,
-    status: DataTypes.STRING,
-    lastTurn: DataTypes.INTEGER,
-    numberOfPlayers: DataTypes.INTEGER,
-  },
-  {
-    sequelize: connection,
-    modelName: 'Game',
-    tableName: 'games',
-  }
-);
-
+    roomId:{
+      type:DataTypes.STRING,
+    } ,
+    boardId: {
+      type:DataTypes.INTEGER
+    },
+    createdBy:{
+      type:DataTypes.INTEGER
+    } ,
+    color:{
+      type:DataTypes.STRING
+    } ,
+    status: {
+      type:DataTypes.STRING
+    },
+    lastTurn: {
+      type:DataTypes.INTEGER
+    },
+    numberOfPlayers:{
+      type:DataTypes.INTEGER
+    } 
+  });
+  Game.belongsTo(User, {
+    foreignKey: 'createdBy',
+    targetKey: 'id',
+    onDelete:'CASCADE'
+  });
+  
+  Game.belongsTo(User, {
+    foreignKey: 'lastTurn',
+    targetKey: 'id',
+    onDelete:'CASCADE'
+  });
+  Game.belongsTo(Board, {
+    foreignKey: 'boardId',
+    targetKey: 'id',
+    onDelete:'CASCADE'
+  });
+  connection.sync();
+  
 export default Game;
+
+

@@ -13,13 +13,13 @@ module.exports = {
       },
       boardId: {
         type: Sequelize.INTEGER,
-        references: { model: 'boards', key: 'id' }
-
+        references: { model: 'boards', key: 'id' },
+        onDelete:'CASCADE'
       },
       createdBy: {
         type: Sequelize.INTEGER,
-        references:{model: 'users', key: 'id' }
-
+        references: { model: 'users', key: 'id' },
+        onDelete:'CASCADE'
       },
       color: {
         type: Sequelize.STRING,
@@ -31,7 +31,8 @@ module.exports = {
       lastTurn: {
         type: Sequelize.INTEGER,
         defaultValue: null,
-        references: { model: 'users', key: 'id' }
+        references: { model: 'users', key: 'id' },
+        onDelete:'CASCADE'
 
       },
       numberOfPlayers: {

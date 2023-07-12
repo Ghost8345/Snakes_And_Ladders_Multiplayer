@@ -11,12 +11,13 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        references: { model: 'users', key: 'id' }
-
+        references: { model: 'users', key: 'id' },
+        onDelete:'CASCADE'
       },
       gameId: {
         type: Sequelize.INTEGER,
-        references: { model: 'games', key: 'id' }
+        references: { model: 'games', key: 'id' },
+        onDelete:'CASCADE'
       },
       position: {
         type: Sequelize.INTEGER,

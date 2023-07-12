@@ -10,14 +10,11 @@ const User = connection.define('user', {
   },
   userName: {
     type: DataTypes.STRING(50),
+    unique:true
   },
   password: {
     type: DataTypes.STRING(255),
-  },
-}, {
-  timestamps: false,
-  createdAt: false,
-  updatedAt: false,
+  }
 });
 
 connection.sync();

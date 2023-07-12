@@ -7,7 +7,7 @@ class Board extends Model {
     // Define associations here
   }
 }
-
+//
 Board.init(
   {
     imagePath: DataTypes.STRING,

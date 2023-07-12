@@ -266,6 +266,5 @@ export default function Game() {
               <button type = "button" onClick={handleLogoutClick}>Logout</button>
             
         </section>
-
     )
 }

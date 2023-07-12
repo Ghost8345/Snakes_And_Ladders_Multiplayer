@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { createGame, JoinGame, move, getPendingGames, updateBoard} from "../Api/gameApi";
+import { createGame, JoinGame, move, getPendingGames, updateBoard, leaveGame, deleteGame} from "../Api/gameApi";
 
 export default function Game() {
     const [boardId, setBoardId] = useState();
@@ -8,10 +8,10 @@ export default function Game() {
     const [gameIdJ, setgameIdJ] = useState();
     const [gameIdM, setgameIdM] = useState();
     const [gameIdU, setgameIdU] = useState();
-
+    const [gameIdL, setgameIdL] = useState();
+    const [gameIdD, setgameIdD] = useState();
 
     const navigate = useNavigate();
-
 
     const handleBoardIdChange = (e) => {
         setBoardId(e.target.value);
@@ -32,6 +32,15 @@ export default function Game() {
       const handleGameIdUChange = (e) => {
         setgameIdU(e.target.value);
       };
+
+      const handleGameIdLChange = (e) => {
+        setgameIdL(e.target.value);
+      };
+
+      const handleGameIdDChange = (e) => {
+        setgameIdD(e.target.value);
+      };
+
       const handleLogoutClick = (e) => {
         localStorage.removeItem('token')
         navigate("/login")
@@ -126,6 +135,40 @@ export default function Game() {
         }
       };
 
+      const handleLeaveGameSubmit = async (e) => {
+        e.preventDefault();
+        // Logic for handling form submission (e.g., API call, validation, etc.)
+        console.log('gameId:', gameIdL);
+
+        const gameId = gameIdL
+
+        try{
+          const response = await leaveGame({gameId})
+          const responseBody = await response.json()
+          console.log(responseBody)
+        }
+        catch(error){
+          console.log(error.message)
+        }
+      };
+
+      const handleDeleteGameSubmit = async (e) => {
+        e.preventDefault();
+        // Logic for handling form submission (e.g., API call, validation, etc.)
+        console.log('gameId:', gameIdD);
+
+        const gameId = gameIdD
+
+        try{
+          const response = await deleteGame({gameId})
+          const responseBody = await response.json()
+          console.log(responseBody)
+        }
+        catch(error){
+          console.log(error.message)
+        }
+      };
+
     return (
         
         <section id="home">
@@ -191,6 +234,32 @@ export default function Game() {
                     onChange={handleGameIdUChange}
                     />
                     <button type="submit">updateBoard</button>
+                </form>
+            </div>
+
+            <div id="leaveGame">
+                <form onSubmit={handleLeaveGameSubmit}>
+                    <label htmlFor="gameId">gameId:</label>
+                    <input
+                    type="text"
+                    id="gameId"
+                    value={gameIdL}
+                    onChange={handleGameIdLChange}
+                    />
+                    <button type="submit">Leave Game</button>
+                </form>
+            </div>
+
+            <div id="deleteGame">
+                <form onSubmit={handleDeleteGameSubmit}>
+                    <label htmlFor="gameId">gameId:</label>
+                    <input
+                    type="text"
+                    id="gameId"
+                    value={gameIdD}
+                    onChange={handleGameIdDChange}
+                    />
+                    <button type="submit">Delete Game</button>
                 </form>
             </div>
 

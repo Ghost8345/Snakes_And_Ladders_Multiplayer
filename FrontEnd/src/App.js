@@ -9,6 +9,8 @@ import "./App.css";
 import Lobby from "./Components/Lobby";
 import Layout from "./Components/Layout/Layout";
 import ProtectedRoutes from "./Components/ProtectedRoutes/ProtectedRoutes";
+import GameBoard from "./Components/Dice/Dice";
+import Test from "./Components/Dice/Test";
 
 
 const routers = createBrowserRouter([
@@ -52,8 +54,10 @@ const routers = createBrowserRouter([
       {
         path: "*", element:
 
-            <Login />
-      }
+          <Login />
+      },
+      { path: "dice", element: <GameBoard /> },
+      {path:'test',element:<Test/>}
     ]
   }
 

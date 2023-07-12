@@ -1,9 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&display=swap');
 
-:root
-{
-    --main-color:#ffa2a2;
-    --font-family:'Encode Sans Expanded', sans-serif;
+:root {
+  --main-color: #ffa2a2;
+  --font-family: 'Encode Sans Expanded', sans-serif;
 }
 
 #home {
@@ -14,7 +13,7 @@
   background-image: url('./Assets/EmptyBoardImage.png');
   background-position: center;
   background-repeat: no-repeat;
-  background-size:contain;
+  background-size: contain;
   width: 100%;
   height: 100%;
   text-align: left;
@@ -24,11 +23,42 @@ body {
   font-family: var(--font-family);
 }
 
-#pages{
-    zoom: 2;
+#pages {
+  zoom: 2;
 }
 
-.bg-main
-{
-    background-color: var(--main-color);
+.bg-main {
+  background-color: var(--main-color);
+}
+
+
+
+.dice {
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.dice-1 {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png');
+}
+
+.dice-2 {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b8/Alea_2.png');
+}
+
+.dice-3 {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2f/Alea_3.png');
+}
+
+.dice-4 {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/8d/Alea_4.png');
+}
+
+.dice-5 {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/55/Alea_5.png');
+}
+
+.dice-6 {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/f/f4/Alea_6.png');
 }

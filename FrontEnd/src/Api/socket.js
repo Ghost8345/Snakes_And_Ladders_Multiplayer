@@ -1,0 +1,1 @@
+export const viewFunct = (data) => console.log(data)

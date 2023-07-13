@@ -7,9 +7,9 @@ export default function Layout() {
     return (
         <>
 
-            {/* <Lottie animationData={animationData} /> */}
+            <Lottie animationData={animationData} />
 
-            {/* {localStorage.setItem("token", "ehab")} */}
+            {localStorage.setItem("token", "ehab")}
             <Outlet />
         </>
     )

@@ -58,8 +58,7 @@ export default function Game() {
             boardId,
             numberOfPlayers
           })
-          const responseBody = await response.json()
-          console.log(responseBody)
+          console.log(response)
         }
         catch(error){
           console.log(error.message)
@@ -77,8 +76,7 @@ export default function Game() {
           const response = await JoinGame({
             gameId
           })
-          const responseBody = await response.json()
-          console.log(responseBody)
+          console.log(response)
         }
         catch(error){
           console.log(error.message)

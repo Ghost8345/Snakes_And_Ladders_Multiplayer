@@ -1,4 +1,5 @@
 import { BACKEND_URL } from "./const";
+import { joinRoom } from "..";
 
 export const createGame = async (game) => {
   const url = `${BACKEND_URL}/game/createGame`;
@@ -18,8 +19,11 @@ export const createGame = async (game) => {
     const message = json.message
     throw new Error(message);
   }
-  
-  return response;
+  const jsonResponse = await response.json()
+  console.log("got response ", jsonResponse, " and room Id ",jsonResponse.game.roomId);
+  joinRoom(jsonResponse.game.roomId)
+
+  return jsonResponse;
 };
 
 export const JoinGame = async (game) => {
@@ -39,8 +43,11 @@ export const JoinGame = async (game) => {
       const message = json.message
       throw new Error(message);
     }
-    
-    return response;
+
+    const jsonResponse = await response.json()
+    console.log("got response ", jsonResponse, " and room Id ",jsonResponse.game.roomId);
+    joinRoom(jsonResponse.game.roomId)
+    return jsonResponse;
   };
 
   export const move = async (game) => {

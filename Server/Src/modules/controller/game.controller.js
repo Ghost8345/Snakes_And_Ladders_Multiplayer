@@ -62,7 +62,7 @@ export const createGame = async (req, res) => {
   const roomIdbase = "room-" + timestamp + "-" + createdBy
   const roomId = btoa(roomIdbase);
 
-  const games = await Game.create({ roomId,boardId, createdBy, status, lastTurn, numberOfPlayers });
+  const games = await Game.create({ roomId, boardId, createdBy, status, lastTurn, numberOfPlayers });
   status = "active"
 
   let position = 0;
@@ -77,7 +77,7 @@ export const joinGame = async (req, res) => {
   let { userId, gameId } = req.body;
   let position = 0;
   let status = "active";
-  // find game with that id
+
   const gameFound = await Game.findOne({
     where: {
       id: gameId,
@@ -88,7 +88,6 @@ export const joinGame = async (req, res) => {
     return res.status(400).json({ message: "Game Not Found" });
   }
 
-  // get players in this game
   const playersJoined = await UserGame.findAll({
     where: {
       gameId: gameId,
@@ -96,18 +95,18 @@ export const joinGame = async (req, res) => {
   });
 
   const playerFound = playersJoined.find(player => player.userId === userId)
-  if (playerFound){
-    return res.status(400).json({message:"User Already Joined"});
+  if (playerFound) {
+    return res.status(400).json({ message: "User Already Joined" });
   }
 
   console.log("Max Number of Players for this Game: ", gameFound.numberOfPlayers);
-
   if (playersJoined.length == gameFound.numberOfPlayers) {
     return res
       .status(400)
       .json({ message: "Game has reached the number of players required" });
   } else if (playersJoined.length == gameFound.numberOfPlayers - 1) {
     const color = colors[playersJoined.length];
+
     await UserGame.create({ userId, gameId, position, status, color });
     await Game.update(
       { status: "Started" },
@@ -137,17 +136,21 @@ export const joinGame = async (req, res) => {
     })
 
 
-    players.push(userId)
     await UserGame.create({ userId, gameId, position, status, color });
     io.to(roomId).emit('playerjoined',{message:'user joined', players:players, game:gameFound })
     return res.status(200).json({message:'user joined', players:players,game:gameFound })
 
+    return res.status(200).json({ message: "success" });
   }
 };
 
+
+
+
+
 export const move = async (req, res) => {
   const { userId, gameId } = req.body;
-  console.log("userID: ", userId, "gameId : " , gameId)
+  console.log("userID: ", userId, "gameId : ", gameId)
 
   const game = await Game.findOne({
     where: {
@@ -268,7 +271,7 @@ export const move = async (req, res) => {
   const movement = playerPostion !== newPosition ? "Move Successful" : "Move Failed (overflow)"
   // fire update for the room id 
   const roomId = game.roomId
-  io.to(roomId).emit('update',{
+  io.to(roomId).emit('update', {
     status: movement,
     positions: positions,
     dice: dice
@@ -350,8 +353,8 @@ export const deleteGame = async (req, res) => {
   const game = await Game.findOne({
     where: { id: gameId },
   });
-console.log(game.createdBy);
-  if(!game){
+
+  if (!game) {
     return res.status(400).json({ message: "Game Not Found" });
   }
   if(game.createdBy==userId && game.status=="pending"){

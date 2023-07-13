@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDice from "react-dice-complete";
-import "react-dice-complete/dist/react-dice-complete.css";
 
 class Dice extends React.Component {
   rollAll = () => {
@@ -18,7 +17,7 @@ class Dice extends React.Component {
           rollDone={this.rollDoneCallback}
           ref={dice => (this.reactDice = dice)}
         />
-        <button onClick={this.rollAll}>Roll Dice</button>
+        <button className="btn  bg-main" id="btn" onClick={this.rollAll}>Roll Dice</button>
       </>
     );
   }

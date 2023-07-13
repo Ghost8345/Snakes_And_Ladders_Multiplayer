@@ -9,20 +9,19 @@ export const SetPlayers = props => {
   } = props;
   return (
     <div>
-      <p>Start game by selecting number of players (Max 4 are allowed)</p>
       <div>
         <input
           type="number"
           onChange={updateNumberOfPlayers}
           value={numOfPlayers}
-          max="4"
+          max="15"
           min="2"
         />
         {invalidNumOfPlayers && (
-          <p className="error">Please select a number between 2 and 4</p>
+          <p className="error">Please select a number between 2 and 15</p>
         )}
         <button
-          className="m-l-20"
+          className="btn  bg-main m-l-20" id="btn" 
           disabled={invalidNumOfPlayers}
           onClick={showLayout}
         >

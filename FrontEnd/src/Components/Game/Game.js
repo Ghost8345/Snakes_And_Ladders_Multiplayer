@@ -1,10 +1,10 @@
 import React from "react";
-import "./styles.css";
+import "./allStyles.css";
 import { SetPlayers } from "./SetPlayers";
 import { Layout } from "./theLayout";
 import { Ledger } from "./Ledger";
-import Dice from "./Dice";
-import { snakePositions, ladderPositions } from "./SnakeAndLadderPositions";
+import Dice from "./TheDice";
+import { snakePositions, ladderPositions } from "./SnakeAndLaddersPositions";
 
 class Game extends React.Component {
   constructor(props) {
@@ -17,14 +17,14 @@ class Game extends React.Component {
   updateNumberOfPlayers = e => {
     this.setState({
       numOfPlayers: e.target.value,
-      invalidNumOfPlayers: e.target.value > 4 || e.target.value < 2
+      invalidNumOfPlayers: e.target.value > 15 || e.target.value < 2
     });
   };
   initializeGame = () => {
     let playersState = {};
     for (let i = 1; i <= this.state.numOfPlayers; i++) {
       playersState[`P${i}`] = {
-        currentPosition: 0
+        currentPosition: -4
       };
     }
     this.setState({
@@ -53,7 +53,7 @@ class Game extends React.Component {
     snakePositions.forEach(obj => {
       if (obj.currentPosition === currentPlayerPostion) {
         alert(
-          `Bad Luck Player ${currentChance}! Snake caught you - Going to position ${
+          `Bad Luck Player ${currentChance}! Snake caught you, Going to position ${
             obj.gotoPosition
           }`
         );
@@ -67,7 +67,7 @@ class Game extends React.Component {
     ladderPositions.forEach(obj => {
       if (obj.currentPosition === currentPlayerPostion) {
         alert(
-          `Great Player ${currentChance}! Ladder taking u to position ${
+          `Great Player ${currentChance}! Ladder taking you to position ${
             obj.gotoPosition
           }`
         );
@@ -128,10 +128,6 @@ class Game extends React.Component {
     return (
       <div className="Game">
         <div className="left-container">
-          <p className="author">
-            <span>Developer - Hemanth Savvana </span>
-          </p>
-          <h1>Snake & Ladders</h1>
           {!hidePlayerSelection && (
             <SetPlayers
               invalidNumOfPlayers={invalidNumOfPlayers}

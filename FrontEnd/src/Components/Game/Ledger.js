@@ -2,35 +2,34 @@ import React from "react";
 
 export const Ledger = () => {
   return (
-    <div>
-      <h2>Below is the Ledger</h2>
-      <ul>
-        <li> Alerts when caught by snake or going up the ladder</li>
-        <li>
-          Ending positions are mentioned in alert for both snake and ladder
-        </li>
-        <li>
-          Snake and Ladder starting positions are highlighted in box, ending
-          positions can be seen in js file.
-        </li>
-        <li>
-          When any one of the players position crosses 100, game is considred
-          over
-        </li>
-        <li>Once game is over, initial screen rendered to start again</li>
-      </ul>
-      <div className="ledger-player">
-        Player 1 is <div className="P1_shape m-l-20" />
-      </div>
-      <div className="ledger-player">
-        Player 2 is <div className="P2_shape m-l-20" />
-      </div>
-      <div className="ledger-player">
-        Player 3 is <div className="P3_shape m-l-20" />
-      </div>
-      <div className="ledger-player">
-        Player 4 is <div className="P4_shape m-l-20" />
-      </div>
-    </div>
+      <div className="ledger-player row d-flex justify-content-center ">
+        <p>
+        - Players are in random shapes
+        </p>
+        <p>
+        - The board has 100 cells.
+        </p>
+        <p>
+        - If a cell has a snake/ladder,
+        </p>
+        <p>
+        it only has a single link to the cell where the snake/ladder leads.
+        </p>
+        <p>
+        - Each player starts at 0.
+        </p>
+        <p>
+        - Every move of a player is made by adding
+        </p>
+        <p>
+        the number of steps to its current cell number.
+        </p>
+        <p>
+        - The player, if lands on a snake/ladder cell,
+        </p>
+        <p>
+        moves to the corresponding cell.
+        </p>
+        </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { snakePositions, ladderPositions } from "./SnakeAndLadderPositions";
+import { snakePositions, ladderPositions } from "./SnakeAndLaddersPositions";
 
 export const EachBox = props => {
   const { boxIndex, updatedState } = props;
@@ -15,12 +15,12 @@ export const EachBox = props => {
     let a = "";
     snakePositions.forEach(snake => {
       if (snake.currentPosition === boxIndex) {
-        a = <div className="snake">S</div>;
+        a = <div className="snake"></div>;
       }
     });
     ladderPositions.forEach(ladder => {
       if (ladder.currentPosition === boxIndex) {
-        a = <div className="ladder">L</div>;
+        a = <div className="ladder"></div>;
       }
     });
     return a;
@@ -37,7 +37,6 @@ export const EachBox = props => {
         })}
       </div>
       {checkIfSnakeOrLadderPresent()}
-      <div style={{ fontSize: "10px" }}>{boxIndex}</div>
     </div>
   );
 };

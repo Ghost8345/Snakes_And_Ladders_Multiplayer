@@ -309,7 +309,7 @@ const timer =async (gameBefore)=>{
     },
   });
 
-  if(gameAfter.updatedAt === gameBefore.updatedAt && gameAfter.gameId === gameAfter.gameId){
+  if(gameAfter.updatedAt === gameBefore.updatedAt && gameBefore.id === gameAfter.id){
     
  
     const playersList = await UserGame.findAll({
@@ -329,7 +329,7 @@ const timer =async (gameBefore)=>{
     io.to(gameBefore.roomId).emit('timeout',{
       userId:toBeKickedId
      })
-    leaveGameLogic(toBeKickedId,gameBefore.gameId)
+    leaveGameLogic(toBeKickedId,gameBefore.id)
   }
 }
 

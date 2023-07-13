@@ -1,7 +1,7 @@
 import React from "react";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
-import Game from "./Components/Game/Game";
+import Game from "./Components/Game/Game1";
 import Lobby2 from "./Components/Circle/Lobby2/Lobby2";
 import { createBrowserRouter, RouterProvider, ScrollView, StyleSheet, View } from 'react-router-dom';
 import './index.css';

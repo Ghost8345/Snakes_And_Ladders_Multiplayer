@@ -1,16 +1,17 @@
 import React from "react";
-import Login from "./Components/Login";
-import Register from "./Components/Register";
-import Game from "./Components/Game";
-import Lobby2 from "./Components/Lobby2";
+import Login from "./Components/Login/Login";
+import Register from "./Components/Register/Register";
+import Game from "./Components/Game/Game";
+import Lobby2 from "./Components/Circle/Lobby2/Lobby2";
 import { createBrowserRouter, RouterProvider, ScrollView, StyleSheet, View } from 'react-router-dom';
 import './index.css';
-import "./App.css";
-import Lobby from "./Components/Lobby";
+import Lobby from "./Components/Lobby/Lobby";
 import Layout from "./Components/Layout/Layout";
 import ProtectedRoutes from "./Components/ProtectedRoutes/ProtectedRoutes";
 import GameBoard from "./Components/Dice/Dice";
 import Test from "./Components/Dice/Test";
+import Home from "./Components/Home/Home";
+import CreateGame from "./Components/CreateGame/CreateGame";
 
 
 const routers = createBrowserRouter([
@@ -57,7 +58,10 @@ const routers = createBrowserRouter([
           <Login />
       },
       { path: "dice", element: <GameBoard /> },
-      {path:'test',element:<Test/>}
+      { path: 'test', element: <Test /> },
+      { path: 'home', element: <Home /> },
+      { path: 'createGame', element: <CreateGame /> },
+
     ]
   }
 
@@ -66,8 +70,8 @@ export default function App() {
   return (
     <div>
 
-    
-    {/* <ScrollView>
+
+      {/* <ScrollView>
       <View styles = {styles.container}>
         <View style = {styles.shapecontaniner}
 
@@ -75,8 +79,8 @@ export default function App() {
 
       </View>
       </ScrollView> */}
-  
-    <RouterProvider router={routers}></RouterProvider>
+
+      <RouterProvider router={routers}></RouterProvider>
     </div>
   );
 }

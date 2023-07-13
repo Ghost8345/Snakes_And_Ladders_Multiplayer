@@ -50,105 +50,105 @@ export const JoinGame = async (game) => {
     return jsonResponse;
   };
 
-  export const move = async (game) => {
-    const url = `${BACKEND_URL}/game/move`;
-    const token = localStorage.getItem('token')
-  
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-type": "application/json", Authorization: `Bearer ${token}` },
-      body: JSON.stringify(game),
-    }).catch((error) => {
-      throw new Error("Problem connecting with the server!");
-    });
-  
-    if (response.status !== 200) {
-      const json = await response.json();
-      const message = json.message
-      throw new Error(message);
-    }
-    
-    return response;
-  };
+export const move = async (game) => {
+  const url = `${BACKEND_URL}/game/move`;
+  const token = localStorage.getItem('token')
 
-  export const getPendingGames = async () => {
-    const url = `${BACKEND_URL}/game/`;
-    const token = localStorage.getItem('token')
-  
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {Authorization: `Bearer ${token}` }
-    }).catch((error) => {
-      throw new Error("Problem connecting with the server!");
-    });
-  
-    if (response.status !== 200) {
-      const json = await response.json();
-      const message = json.message
-      throw new Error(message);
-    }
-    
-    return response;
-  };
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(game),
+  }).catch((error) => {
+    throw new Error("Problem connecting with the server!");
+  });
 
-  export const updateBoard = async (gameId) => {
-    const url = `${BACKEND_URL}/game/updateBoard/${gameId}`;
-    const token = localStorage.getItem('token')
-  
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {Authorization: `Bearer ${token}` }
-    }).catch((error) => {
-      throw new Error("Problem connecting with the server!");
-    });
-  
-    if (response.status !== 200) {
-      const json = await response.json();
-      const message = json.message
-      throw new Error(message);
-    }
-    
-    return response;
-  };
+  if (response.status !== 200) {
+    const json = await response.json();
+    const message = json.message
+    throw new Error(message);
+  }
 
-  export const leaveGame = async (game) => {
-    const url = `${BACKEND_URL}/game/leaveGame`;
-    const token = localStorage.getItem('token')
-  
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-type": "application/json", Authorization: `Bearer ${token}` },
-      body: JSON.stringify(game),
-    }).catch((error) => {
-      throw new Error("Problem connecting with the server!");
-    });
-  
-    if (response.status !== 200) {
-      const json = await response.json();
-      const message = json.message
-      throw new Error(message);
-    }
-    
-    return response;
-  };
+  return response;
+};
 
-  export const deleteGame = async (game) => {
-    const url = `${BACKEND_URL}/game/deleteGame`;
-    const token = localStorage.getItem('token')
-  
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-type": "application/json", Authorization: `Bearer ${token}` },
-      body: JSON.stringify(game),
-    }).catch((error) => {
-      throw new Error("Problem connecting with the server!");
-    });
-  
-    if (response.status !== 200) {
-      const json = await response.json();
-      const message = json.message
-      throw new Error(message);
-    }
-    
-    return response;
-  };
+export const getPendingGames = async () => {
+  const url = `${BACKEND_URL}/game/`;
+  const token = localStorage.getItem('token')
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` }
+  }).catch((error) => {
+    throw new Error("Problem connecting with the server!");
+  });
+
+  if (response.status !== 200) {
+    const json = await response.json();
+    const message = json.message
+    throw new Error(message);
+  }
+
+  return response;
+};
+
+export const updateBoard = async (gameId) => {
+  const url = `${BACKEND_URL}/game/updateBoard/${gameId}`;
+  const token = localStorage.getItem('token')
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` }
+  }).catch((error) => {
+    throw new Error("Problem connecting with the server!");
+  });
+
+  if (response.status !== 200) {
+    const json = await response.json();
+    const message = json.message
+    throw new Error(message);
+  }
+
+  return response;
+};
+
+export const leaveGame = async (game) => {
+  const url = `${BACKEND_URL}/game/leaveGame`;
+  const token = localStorage.getItem('token')
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(game),
+  }).catch((error) => {
+    throw new Error("Problem connecting with the server!");
+  });
+
+  if (response.status !== 200) {
+    const json = await response.json();
+    const message = json.message
+    throw new Error(message);
+  }
+
+  return response;
+};
+
+export const deleteGame = async (game) => {
+  const url = `${BACKEND_URL}/game/deleteGame`;
+  const token = localStorage.getItem('token')
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(game),
+  }).catch((error) => {
+    throw new Error("Problem connecting with the server!");
+  });
+
+  if (response.status !== 200) {
+    const json = await response.json();
+    const message = json.message
+    throw new Error(message);
+  }
+
+  return response;
+};

@@ -39,11 +39,11 @@ export default function Login() {
   };
 
 
-  const handleLoginClick = () => {
-    console.log('Username:', userName);
-    console.log('Password:', password);
-    navigate("/lobby");
-  };
+  // const handleLoginClick = () => {
+  //   console.log('Username:', userName);
+  //   console.log('Password:', password);
+  //   navigate("/lobby");
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Logic for handling form submission (e.g., API call, validation, etc.)
@@ -99,7 +99,7 @@ export default function Login() {
                   />
                 </div>
                 <div className="d-flex justify-content-center mb-4">
-                  <button type="submit" id="btn" class="btn bg-main " onClick={handleLoginClick}>Login</button>
+                  <button type="submit" id="btn" class="btn bg-main " >Login</button>
 
                 </div>
                 <p>Or create a new account</p>

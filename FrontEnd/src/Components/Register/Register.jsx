@@ -65,7 +65,7 @@ export default function Register() {
             onChange={handlePasswordChange}
           />
         </div>
-        <button type="submit" id="btn" class="btn bg-main text-white">Register</button>
+        <button type="submit" id="btn" class="btn bg-main text-white" >Register</button>
         <p>Have an account?</p>
         <button type="button" id="btn" class="btn bg-main text-white" onClick={handleLoginClick}>Login</button>
       </form>

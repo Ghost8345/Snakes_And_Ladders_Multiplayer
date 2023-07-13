@@ -17,7 +17,7 @@ class Dice extends React.Component {
           rollDone={this.rollDoneCallback}
           ref={dice => (this.reactDice = dice)}
         />
-        <button className="btn  bg-main" id="btn"  onClick={this.rollAll}>Roll Dice</button>
+        <button className="btn  bg-main" id="btn" onClick={this.rollAll}>Roll Dice</button>
       </>
     );
   }

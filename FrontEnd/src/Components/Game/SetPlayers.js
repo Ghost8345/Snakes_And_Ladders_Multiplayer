@@ -14,7 +14,7 @@ export const SetPlayers = props => {
           type="number"
           onChange={updateNumberOfPlayers}
           value={numOfPlayers}
-          max="4"
+          max="15"
           min="2"
         />
         {invalidNumOfPlayers && (

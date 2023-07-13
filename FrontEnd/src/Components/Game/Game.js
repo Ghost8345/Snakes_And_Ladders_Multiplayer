@@ -53,7 +53,7 @@ class Game extends React.Component {
     snakePositions.forEach(obj => {
       if (obj.currentPosition === currentPlayerPostion) {
         alert(
-          `Bad Luck Player ${currentChance}! Snake caught you - Going to position ${
+          `Bad Luck Player ${currentChance}! Snake caught you, Going to position ${
             obj.gotoPosition
           }`
         );
@@ -67,7 +67,7 @@ class Game extends React.Component {
     ladderPositions.forEach(obj => {
       if (obj.currentPosition === currentPlayerPostion) {
         alert(
-          `Great Player ${currentChance}! Ladder taking u to position ${
+          `Great Player ${currentChance}! Ladder taking you to position ${
             obj.gotoPosition
           }`
         );
@@ -138,7 +138,8 @@ class Game extends React.Component {
           )}
           {showLayout && (
             <>
-              <p>{chanceToRollDice} Turn </p>
+              <p>Players are {this.getNamesofPlayers()}</p>
+              <p>Chance to Roll Dice is with {chanceToRollDice}</p>
               <Dice rollDice={this.rollDice} />
             </>
           )}

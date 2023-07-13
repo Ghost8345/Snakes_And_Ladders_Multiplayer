@@ -53,20 +53,87 @@
   .P2_shape {
     height: 20px;
     width: 20px;
-    background-color: #555;
+    background-color: #500c75;
     border-radius: 50%;
   }
   .P3_shape {
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: 20px solid #555;
+    border-bottom: 20px solid #ffcfcf;
   }
   .P4_shape {
-    border-bottom: 15px solid #555;
+    border-bottom: 15px solid #b7ec8e;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     width: 10px;
   }
+  .P5_shape {
+    border-bottom: 15px solid #410202;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
+  .P6_shape {
+    border-bottom: 15px solid aqua;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
+  .P7_shape {
+    border-bottom: 15px solid #f4f0f0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
+  .P8_shape {
+    border-bottom: 15px solid #c67cbd;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
+  .P9_shape {
+    border-bottom: 15px solid #f1b613;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
+  .P10_shape {
+    border-bottom: 15px solid #d2d832;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
+  .P11_shape {
+    border-bottom: 15px solid #38e855;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
+  .P12_shape {
+    border-bottom: 15px solid #16deec;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
+  .P13_shape {
+    border-bottom: 15px solid #2709e7;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
+  .P14_shape {
+    border-bottom: 15px solid #d75050;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
+  .P15_shape {
+    border-bottom: 15px solid #fc03fc;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 10px;
+  }
+
   .theLayout {
     width: 800px;
     display: flex;

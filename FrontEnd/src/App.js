@@ -12,60 +12,51 @@ import GameBoard from "./Components/Dice/Dice";
 import Test from "./Components/Dice/Test";
 import Home from "./Components/Home/Home";
 import CreateGame from "./Components/CreateGame/CreateGame";
+import Pending from "./Components/Pending/Pending";
 
 
 const routers = createBrowserRouter([
   {
     path: "", element: <Layout />, children: [
       {
-        index: true, element:
-
-          <Login />
-
+        index: true, element: <Login />
       },
       {
-        path: "register", element:
-
-          <Register />
+        path: "register", element: <Register />
       },
       {
-        path: "game", element:
-
-
+        path: "game", element: (
           <ProtectedRoutes>
             <Game />
           </ProtectedRoutes>
-
+        )
       },
       {
-        path: "lobby", element:
+        path: "lobby", element: (
           <ProtectedRoutes>
             <Lobby />
           </ProtectedRoutes>
-
+        )
       },
       {
-        path: "lobby2", element:
-
+        path: "lobby2", element: (
           <ProtectedRoutes>
             <Lobby2 />
           </ProtectedRoutes>
-
+        )
       },
       {
-        path: "*", element:
-
-          <Login />
+        path: "*", element: <Login />
       },
       { path: "dice", element: <GameBoard /> },
       { path: 'test', element: <Test /> },
       { path: 'home', element: <Home /> },
       { path: 'createGame', element: <CreateGame /> },
-
+      { path: 'Pending', element: <Pending /> } // Update the route for Pending with the parameter
     ]
   }
+]);
 
-])
 export default function App() {
   return (
     <div>

@@ -5,7 +5,7 @@ import Board from "../../models/board.js";
 import Game from "../../models/game.js";
 import Element from "../../models/element.js";
 import User from "../../models/user.js";
-import {QueryTypes} from "sequelize";
+import { QueryTypes } from "sequelize";
 
 
 const colors = [
@@ -70,7 +70,7 @@ export const createGame = async (req, res) => {
   const color = colors[0];
 
   await UserGame.create({ userId, gameId, position, status, color });
-  res.status(200).json({ game:games, board });
+  res.status(200).json({ game: games, board });
 };
 
 export const joinGame = async (req, res) => {
@@ -126,8 +126,8 @@ export const joinGame = async (req, res) => {
 
     // fire event for the rest of the room that player joined
     const roomId = gameFound.roomId
-    io.to(roomId).emit('playerjoined',{message:'user joined', players:players, game:gameFound })
-    return res.status(200).json({message:'user joined', players:players,game:gameFound })
+    io.to(roomId).emit('playerjoined', { message: 'user joined', players: players, game: gameFound })
+    return res.status(200).json({ message: 'user joined', players: players, game: gameFound })
   } else { // general case
     const color = colors[playersJoined.length]
     const roomId = gameFound.roomId
@@ -137,10 +137,9 @@ export const joinGame = async (req, res) => {
 
 
     await UserGame.create({ userId, gameId, position, status, color });
-    io.to(roomId).emit('playerjoined',{message:'user joined', players:players, game:gameFound })
-    return res.status(200).json({message:'user joined', players:players,game:gameFound })
+    io.to(roomId).emit('playerjoined', { message: 'user joined', players: players, game: gameFound })
+    return res.status(200).json({ message: 'user joined', players: players, game: gameFound })
 
-    return res.status(200).json({ message: "success" });
   }
 };
 
@@ -422,14 +421,15 @@ export const deleteGame = async (req, res) => {
 };
 
 export const getPlayersNames = async (req, res) => {
-  const { userId, gameId } = req.body;
+  const { userId } = req.body;
+  const { gameId } = req.params
 
   const players = await UserGame.findAll({
     include: User,
-    where: {gameId: gameId}
+    where: { gameId: gameId }
   })
 
-  if(!players){
+  if (!players) {
     return res.status(400).json({ message: "ERR" });
   }
 
@@ -442,6 +442,6 @@ export const getPlayersNames = async (req, res) => {
   console.log(playerNames)
 
   return res.status(200).json(playerNames)
-  
+
 
 };

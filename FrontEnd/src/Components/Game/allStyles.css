@@ -1,7 +1,7 @@
 .Game {
-    font-family: sans-serif;
-    text-align: center;
     display: flex;
+    text-align: center;
+    font-family: 'Encode Sans Expanded', sans-serif;
   }
   .author {
     background: cadetblue;
@@ -71,16 +71,19 @@
     width: 800px;
     display: flex;
     flex-wrap: wrap;
+    text-align: center;
+    font-family: 'Encode Sans Expanded', sans-serif;
   }
   .board {
+    background-image: url("../../Assets/EmptyBoardImage.png");
+    background-size: contain;
+    background-repeat: no-repeat;
     margin-left: 40px;
-    background: #fff;
     border-radius: 5px;
     max-width: 600px;
     min-height: 600px;
     height: 600px;
     display: flex;
-    border: solid 3px #333;
     flex-flow: column;
     transform: scale(1, -1);
     /* animation-name: flipBoard;
@@ -125,7 +128,6 @@
   .box {
     width: 59px;
     height: 59px;
-    border: solid 0.5px #d87878;
     text-align: left;
     vertical-align: text-top;
     transition: 0.2s ease-in;
@@ -161,9 +163,4 @@
     left: 20px;
     font-weight: bold;
     transition: 0.1s ease-in;
-  }
-  
-  .box:nth-child(2n) {
-    background: #d87878;
-    border: solid 0.5px #fff;
   }

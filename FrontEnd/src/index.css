@@ -73,6 +73,9 @@ body {
 }
 
 body {
+  background-image: url("./Assets/Background.png");
+  background-size: auto;
+  background-clip: padding-box;
   background-color: #c1f6ef;
   text-align: center;
   font-family: 'Encode Sans Expanded', sans-serif;

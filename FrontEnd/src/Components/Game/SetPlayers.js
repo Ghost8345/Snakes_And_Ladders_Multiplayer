@@ -18,10 +18,10 @@ export const SetPlayers = props => {
           min="2"
         />
         {invalidNumOfPlayers && (
-          <p className="error">Please select a number between 2 and 4</p>
+          <p className="error">Please select a number between 2 and 15</p>
         )}
         <button
-          className="m-l-20"
+          className="btn  bg-main m-l-20" id="btn" 
           disabled={invalidNumOfPlayers}
           onClick={showLayout}
         >

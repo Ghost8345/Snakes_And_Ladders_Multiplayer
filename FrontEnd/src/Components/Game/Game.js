@@ -17,14 +17,14 @@ class Game extends React.Component {
   updateNumberOfPlayers = e => {
     this.setState({
       numOfPlayers: e.target.value,
-      invalidNumOfPlayers: e.target.value > 4 || e.target.value < 2
+      invalidNumOfPlayers: e.target.value > 15 || e.target.value < 2
     });
   };
   initializeGame = () => {
     let playersState = {};
     for (let i = 1; i <= this.state.numOfPlayers; i++) {
       playersState[`P${i}`] = {
-        currentPosition: 0
+        currentPosition: -4
       };
     }
     this.setState({
@@ -138,8 +138,7 @@ class Game extends React.Component {
           )}
           {showLayout && (
             <>
-              <p>Players are {this.getNamesofPlayers()}</p>
-              <p>Chance to Roll Dice is with {chanceToRollDice}</p>
+              <p>{chanceToRollDice} Turn </p>
               <Dice rollDice={this.rollDice} />
             </>
           )}

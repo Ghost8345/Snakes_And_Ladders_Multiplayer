@@ -305,7 +305,7 @@ export const move = async (req, res) => {
 const timer =async (gameBefore)=>{
   const gameAfter = await Game.findOne({
     where: {
-      id: gameBefore.gameId,
+      id: gameBefore.id,
     },
   });
 
@@ -314,7 +314,7 @@ const timer =async (gameBefore)=>{
  
     const playersList = await UserGame.findAll({
       where: {
-        gameId: gameBefore.gameId,
+        gameId: gameBefore.id,
       },
     });
   

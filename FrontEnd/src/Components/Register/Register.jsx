@@ -71,10 +71,10 @@ export default function Register() {
                 />
               </div>
               <div className="d-flex justify-content-center mb-4">
-                <button type="submit" id="btn" class="btn bg-main text-white">Register</button>
+                <button type="submit" id="btn" class="btn bg-main ">Register</button>
               </div>
               <p>Have an account?</p>
-              <button type="button" id="btn" class="btn bg-main text-white" onClick={handleLoginClick}>Login</button>
+              <button type="button" id="btn" class="btn bg-main 4 " onClick={handleLoginClick}>Login</button>
             </form>
           </div>
         </div>

@@ -43,32 +43,42 @@ export default function Register() {
   };
 
   return (
-    <div id="pages">
-      <h1>Snake and Ladder Multiplayer Game</h1>
-      <h2>register</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={userName}
-            onChange={handleUserNameChange}
-          />
+    <>
+      <div className="container">
+        <div className="row d-flex justify-content-center">
+          <h1>Snake and Ladder Multiplayer Game</h1>
+          <h2>Register</h2>
+          <div className="col-md-4 p-4 bg-light">
+            <form onSubmit={handleSubmit}>
+              <div className="d-flex justify-content-center mb-4">
+                <label htmlFor="username">Username:</label>
+                <input
+                  className="form-control w-50"
+                  type="text"
+                  id="username"
+                  value={userName}
+                  onChange={handleUserNameChange}
+                />
+              </div>
+              <div className="d-flex justify-content-center mb-4" >
+                <label htmlFor="password">Password:</label>
+                <input
+                  className="form-control w-50"
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+              </div>
+              <div className="d-flex justify-content-center mb-4">
+                <button type="submit" id="btn" class="btn bg-main text-white">Register</button>
+              </div>
+              <p>Have an account?</p>
+              <button type="button" id="btn" class="btn bg-main text-white" onClick={handleLoginClick}>Login</button>
+            </form>
+          </div>
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </div>
-        <button type="submit" id="btn" class="btn bg-main text-white" >Register</button>
-        <p>Have an account?</p>
-        <button type="button" id="btn" class="btn bg-main text-white" onClick={handleLoginClick}>Login</button>
-      </form>
-    </div>
+      </div>
+    </>
   );
 }

@@ -5,7 +5,6 @@ import Game from "./Components/Game/Game";
 import Lobby2 from "./Components/Circle/Lobby2/Lobby2";
 import { createBrowserRouter, RouterProvider, ScrollView, StyleSheet, View } from 'react-router-dom';
 import './index.css';
-import "./App.css";
 import Lobby from "./Components/Lobby/Lobby";
 import Layout from "./Components/Layout/Layout";
 import ProtectedRoutes from "./Components/ProtectedRoutes/ProtectedRoutes";

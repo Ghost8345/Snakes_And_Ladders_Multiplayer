@@ -1,7 +1,9 @@
 import { BACKEND_URL } from "./const";
 import { joinRoom } from "..";
-
+import { useNavigate } from "react-router-dom";
 export const createGame = async (game) => {
+  console.log(game);
+  console.log(JSON.stringify(game));
   const url = `${BACKEND_URL}/game/createGame`;
   const token = localStorage.getItem('token')
   console.log("TOKEN IN CREATE GAME: ", token)
@@ -17,38 +19,43 @@ export const createGame = async (game) => {
   if (response.status !== 200) {
     const json = await response.json();
     const message = json.message
-    throw new Error(message);
+    return "Board is not found "
   }
   const jsonResponse = await response.json()
-  console.log("got response ", jsonResponse, " and room Id ",jsonResponse.game.roomId);
-  joinRoom(jsonResponse.game.roomId)
 
+
+  console.log("got response ", jsonResponse, " and room Id ", jsonResponse.game.roomId);
+  joinRoom(jsonResponse.game.roomId)
   return jsonResponse;
 };
 
 export const JoinGame = async (game) => {
-    const url = `${BACKEND_URL}/game/joinGame`;
-    const token = localStorage.getItem('token')
-  
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-type": "application/json", Authorization: `Bearer ${token}` },
-      body: JSON.stringify(game),
-    }).catch((error) => {
-      throw new Error("Problem connecting with the server!");
-    });
-  
-    if (response.status !== 200) {
-      const json = await response.json();
-      const message = json.message
-      throw new Error(message);
-    }
+  const url = `${BACKEND_URL}/game/joinGame`;
+  const token = localStorage.getItem('token')
 
-    const jsonResponse = await response.json()
-    console.log("got response ", jsonResponse, " and room Id ",jsonResponse.game.roomId);
-    joinRoom(jsonResponse.game.roomId)
-    return jsonResponse;
-  };
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(game),
+  }).catch((error) => {
+    throw new Error("Problem connecting with the server!");
+  });
+
+  if (response.status !== 200) {
+    const json = await response.json();
+    const message = json.message
+    throw new Error(message);
+  }
+
+  const jsonResponse = await response.json()
+  console.log("got response ", jsonResponse, " and room Id ", jsonResponse.game.roomId);
+  joinRoom(jsonResponse.game.roomId)
+  return jsonResponse;
+};
+
+
+
+
 
 export const move = async (game) => {
   const url = `${BACKEND_URL}/game/move`;

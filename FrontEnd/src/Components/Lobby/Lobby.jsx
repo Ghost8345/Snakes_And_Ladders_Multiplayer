@@ -5,7 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { BACKEND_URL } from "../../Api/const.js";
 import { JoinGame } from '../../Api/gameApi.js'
 import { Slide, ToastContainer, toast } from 'react-toastify';
-export default function Login() {
+export default function Lobby() {
   const navigate = useNavigate();
 
 

@@ -1,0 +1,12 @@
+.home {
+    background-image: url("https://wallpapercave.com/wp/wp9142165.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.layer {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+}

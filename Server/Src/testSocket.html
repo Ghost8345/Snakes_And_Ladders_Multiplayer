@@ -61,8 +61,8 @@
         .then(data => {
           console.log('Game created:', data);
           // socket.emit(data.games.roomId,"hey")
-          roomId = data.games.roomId
-          joinRoom(data.games.roomId)
+          roomId = data.game.roomId
+          joinRoom(data.game.roomId)
 
         })
         .catch(error => {
@@ -88,7 +88,7 @@
       })
         .then(response => response.json())
         .then(data => {
-          joinRoom(data.games.roomId)
+          joinRoom(data.game.roomId)
         })
         .catch(error => {
           console.error('Error creating game:', error);

@@ -268,6 +268,22 @@ export const move = async (req, res) => {
   const movement = playerPostion !== newPosition ? "Move Successful" : "Move Failed (overflow)"
   // fire update for the room id 
   const roomId = game.roomId
+  
+
+  //get updated at
+
+  
+  const gameBefore = await Game.findOne({
+    where: {
+      id: gameId,
+    },
+  });
+
+  setTimeout( timer,10000,gameBefore);
+
+
+
+  // emit to socket listeners
   io.to(roomId).emit('update',{
     status: movement,
     positions: positions,
@@ -280,6 +296,38 @@ export const move = async (req, res) => {
     dice: dice
   });
 };
+
+
+
+const timer =async (gameBefore)=>{
+  const gameAfter = await Game.findOne({
+    where: {
+      id: gameBefore.gameId,
+    },
+  });
+
+  if(gameAfter.updatedAt === gameBefore.updatedAt && gameAfter.gameId === gameAfter.gameId){
+    
+    io.to(gameBefore.roomId).emit('timeout',{
+       message:"timed out" 
+    })
+    const playersList = await UserGame.findAll({
+      where: {
+        gameId: gameId,
+      },
+    });
+  
+    const playerIds = playersList.map((player) => {
+      return player.userId;
+    });
+
+    const lastTurn = gameBefore.lastTurn;
+    const indexOfLastPlayer = playerIds.indexOf(lastTurn);
+    const indexOfCurrentPlayer = (indexOfLastPlayer + 1) % playersList.length;
+    const toBeKickedId = playerIds[indexOfCurrentPlayer]
+    leaveGameLogic(toBeKickedId,gameBefore.gameId)
+  }
+}
 
 
 
@@ -332,8 +380,9 @@ export const updateBoard = async (req, res) => {
     .status(200)
     .json({ message: "success", players, elements, game, board });
 };
-export const leaveGame = async (req, res) => {
-  const { userId, gameId } = req.body;
+
+
+const leaveGameLogic =async(userId,gameId)=>{
   const row = await UserGame.findOne({
     where: { userId: userId, gameId: gameId },
   });
@@ -343,8 +392,16 @@ export const leaveGame = async (req, res) => {
   if (row) {
     console.log(await row.destroy()); // deletes the row
   }
+}
+
+
+export const leaveGame = async (req, res) => {
+  const { userId, gameId } = req.body;
+  leaveGameLogic(userId,gameId)
   return res.status(200).json({ Message: player.userName + " Left" });
 };
+
+
 export const deleteGame = async (req, res) => {
   const { userId, gameId } = req.body;
   const game = await Game.findOne({

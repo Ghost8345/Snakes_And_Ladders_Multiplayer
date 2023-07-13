@@ -4,6 +4,7 @@ import App from './App';
 import './index.css';
 
 import io from 'socket.io-client';
+
 const socket = io('http://localhost:4000'); // Connect to the server
 
 
@@ -18,6 +19,11 @@ socket.on('connect', () => {
 
   socket.on('update', (data)=>{
     console.log("update the board with move:",data);
+  })
+
+  socket.on('timeout', (message)=>{
+    console.log("timeout ", message)
+    // call leave game api
   })
 export const joinRoom = (roomId) =>{
     console.log("emitting to ",roomId);

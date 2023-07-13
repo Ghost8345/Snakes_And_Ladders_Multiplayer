@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createGame, JoinGame, move, getPendingGames, updateBoard, leaveGame, deleteGame } from "../../Api/gameApi.js";
 
-export default function Game() {
+export default function Game1() {
     const [boardId, setBoardId] = useState();
     const [numberOfPlayers, setNumberOfPlayers] = useState();
     const [gameIdJ, setgameIdJ] = useState();

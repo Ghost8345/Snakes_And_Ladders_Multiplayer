@@ -1,7 +1,7 @@
 export const config = {
     development: {
         username: 'root',
-        password: '',
+        password: '8520789',
         database: 'snackladdergame',
         host: 'localhost',
         dialect: 'mysql',

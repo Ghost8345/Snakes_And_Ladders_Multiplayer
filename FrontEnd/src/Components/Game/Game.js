@@ -1,10 +1,10 @@
 import React from "react";
-import "./styles.css";
+import "./allStyles.css";
 import { SetPlayers } from "./SetPlayers";
 import { Layout } from "./theLayout";
 import { Ledger } from "./Ledger";
-import Dice from "./Dice";
-import { snakePositions, ladderPositions } from "./SnakeAndLadderPositions";
+import Dice from "./TheDice";
+import { snakePositions, ladderPositions } from "./SnakeAndLaddersPositions";
 
 class Game extends React.Component {
   constructor(props) {
@@ -128,10 +128,6 @@ class Game extends React.Component {
     return (
       <div className="Game">
         <div className="left-container">
-          <p className="author">
-            <span>Developer - Hemanth Savvana </span>
-          </p>
-          <h1>Snake & Ladders</h1>
           {!hidePlayerSelection && (
             <SetPlayers
               invalidNumOfPlayers={invalidNumOfPlayers}

@@ -9,7 +9,6 @@ export const SetPlayers = props => {
   } = props;
   return (
     <div>
-      <p>Start game by selecting number of players (Max 4 are allowed)</p>
       <div>
         <input
           type="number"
